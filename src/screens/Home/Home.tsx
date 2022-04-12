@@ -4,7 +4,7 @@ import {SafeAreaView, Text} from "react-native";
 const Home = () => {
     return (
         <SafeAreaView>
-            <Text>Home</Text>
+            <Text>Home Screen</Text>
         </SafeAreaView>
     );
 };
