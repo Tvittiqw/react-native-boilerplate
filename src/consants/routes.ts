@@ -1,8 +1,14 @@
-const privateRoutes = {
+import {RootStackParamList} from "../types/navigationTypes";
+
+type RoutesType = {
+    [key: string]: keyof RootStackParamList
+}
+
+const privateRoutes: RoutesType = {
     home: "Home",
 }
 
-const publicRoutes = {
+const publicRoutes: RoutesType = {
     login: "Login",
     signup: "SignUp",
 }

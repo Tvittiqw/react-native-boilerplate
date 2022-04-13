@@ -1,12 +1,12 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {SafeAreaView, Text} from "react-native";
 
-const Login: FC = () => {
+const HomeScreen = () => {
     return (
         <SafeAreaView>
-            <Text>Login</Text>
+            <Text>Home Screen</Text>
         </SafeAreaView>
     );
 };
 
-export default Login;
+export default HomeScreen;

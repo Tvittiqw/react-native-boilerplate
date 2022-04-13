@@ -1,9 +1,9 @@
-import Home from "./Home/Home";
-import Login from "./Auth/Login/Login";
-import SignUp from "./Auth/SignUp/SignUp";
+import HomeScreen from "./Home/HomeScreen";
+import LoginScreen from "./Auth/Login/LoginScreen";
+import SignUpScreen from "./Auth/SignUp/SignUpScreen";
 
 export {
-    Home,
-    Login,
-    SignUp
+    HomeScreen,
+    LoginScreen,
+    SignUpScreen
 }
