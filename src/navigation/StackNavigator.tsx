@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 import {NavigationContainer} from "@react-navigation/native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {routes} from "../consants/routes";
-import {HomeScreen, LoginScreen, SignUpScreen} from "../screens";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {LoginScreen, SignUpScreen} from "../screens";
 import {useTypedSelector} from "../hooks/storeHooks/typedStoreHooks";
 import {RootStackParamList} from "../types/navigationTypes";
+import BottomTabNavigator from "./BottomTabNavigator";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -18,20 +18,20 @@ const StackNavigator: FC = () => {
                 {isAuth ? (
                     <>
                         <Stack.Screen
-                            name={routes.private.home}
-                            component={HomeScreen}
+                            name={"BottomTab"}
+                            component={BottomTabNavigator}
                             options={{ headerShown: false }}
                         />
                     </>
                 ) : (
                     <>
                         <Stack.Screen
-                            name={routes.public.login}
+                            name={"Login"}
                             component={LoginScreen}
                             options={{ headerShown: false }}
                         />
                         <Stack.Screen
-                            name={routes.public.signup}
+                            name={"SignUp"}
                             component={SignUpScreen}
                             options={{ headerShown: false }}
                         />

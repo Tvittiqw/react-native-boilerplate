@@ -4,7 +4,6 @@ import {SignUpForm} from "../../../components/auth";
 import {SignUpFormValuesType} from "../../../types/formsTypes";
 import {NavigationPropsType} from "../../../types/navigationTypes";
 import styles from "./styles";
-import {routes} from "../../../consants/routes";
 import signupValidationSchema from "../../../validators/signupValidationSchema";
 import {useTypedDispatch} from "../../../hooks/storeHooks/typedStoreHooks";
 import {fetchSignUpForm} from "../../../redux/auth/authSlice";
@@ -52,7 +51,7 @@ const SignUpScreen: FC<SignUpNavigationProps> = ({ navigation }) => {
 
                     <View style={styles.loginContainer}>
                         <Text>Already have an account? Go to </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate(routes.public.login)}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                             <Text style={styles.navLink}>Login</Text>
                         </TouchableOpacity>
                     </View>

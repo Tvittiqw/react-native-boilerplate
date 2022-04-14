@@ -2,14 +2,14 @@ import React, {FC} from 'react';
 import {SafeAreaView, Text} from "react-native";
 import {BottomTabProps} from "../../types/navigationTypes";
 
-type NavigationProps = BottomTabProps<"Home">
+type NavigationProps = BottomTabProps<"Calendar">
 
-const HomeScreen: FC<NavigationProps> = ({ navigation }) => {
+const CalendarScreen: FC<NavigationProps> = ({ navigation }) => {
     return (
         <SafeAreaView>
-            <Text>Home Screen</Text>
+            <Text>Calendar Screen</Text>
         </SafeAreaView>
     );
 };
 
-export default HomeScreen;
+export default CalendarScreen;

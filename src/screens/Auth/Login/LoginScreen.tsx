@@ -5,7 +5,6 @@ import {LoginFormValuesType} from "../../../types/formsTypes";
 import styles from "./styles"
 import {NavigationPropsType} from "../../../types/navigationTypes";
 import loginValidationSchema from "../../../validators/loginValidationSchema";
-import {routes} from "../../../consants/routes";
 import {useTypedDispatch} from "../../../hooks/storeHooks/typedStoreHooks";
 import {fetchLoginForm} from "../../../redux/auth/authSlice";
 import {FormikHelpers} from "formik";
@@ -63,7 +62,7 @@ const LoginScreen: FC<LoginNavigationProps> = ({ navigation }) => {
 
                     <View style={styles.registerContainer}>
                         <Text>Don't have an account yet? Go to </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate(routes.public.signup)}>
+                        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
                             <Text style={styles.navLink}>Register</Text>
                         </TouchableOpacity>
                     </View>
