@@ -10,14 +10,17 @@ export type RootStackParamList = {
     BottomTab: NavigatorScreenParams<BottomTabParamList>
     Login: undefined
     SignUp: undefined
+    ForgotPassword: undefined
+    ResetPassword: undefined
 };
 
 export type NavigationPropsType<T extends keyof RootStackParamList>
     = NativeStackScreenProps<RootStackParamList, T>
 
 export type BottomTabParamList = {
-    Home: undefined;
-    Calendar: undefined;
+    Calendar: undefined
+    Settings: undefined
+    Search: undefined
 };
 
 export type BottomTabProps<T extends keyof BottomTabParamList> =

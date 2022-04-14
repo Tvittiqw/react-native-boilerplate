@@ -77,7 +77,7 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                     error={errors.confirmPassword && validateOnChange ? errors.confirmPassword : ""}
                 />
             </View>
-            <View style={{ marginTop: 20 }}>
+            <View style={{ marginTop: 50 }}>
                 <CustomButton
                     onPress={() => {
                         setValidateOnChange(true);
@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     formFieldContainer: {
-        marginTop: 20
+        marginTop: 50
     }
 })

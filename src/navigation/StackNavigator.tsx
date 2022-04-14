@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {LoginScreen, SignUpScreen} from "../screens";
+import {ForgotPasswordScreen, LoginScreen, ResetPasswordScreen, SignUpScreen} from "../screens";
 import {useTypedSelector} from "../hooks/storeHooks/typedStoreHooks";
 import {RootStackParamList} from "../types/navigationTypes";
 import BottomTabNavigator from "./BottomTabNavigator";
@@ -35,8 +35,22 @@ const StackNavigator: FC = () => {
                             component={SignUpScreen}
                             options={{ headerShown: false }}
                         />
+                        <Stack.Screen
+                            name={"ForgotPassword"}
+                            component={ForgotPasswordScreen}
+                            options={{ headerShown: false }}
+                        />
                     </>
                 )}
+
+                <Stack.Group navigationKey={isAuth ? "user" : "guest"}>
+                    <Stack.Screen
+                        name={"ResetPassword"}
+                        component={ResetPasswordScreen}
+                        options={{ headerShown: false }}
+                    />
+                </Stack.Group>
+
             </Stack.Navigator>
         </NavigationContainer>
     )

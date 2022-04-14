@@ -1,11 +1,17 @@
-import HomeScreen from "./Home/HomeScreen";
+import SettingsScreen from "./Settings/SettingsScreen";
 import CalendarScreen from "./Calendar/CalendarScreen";
+import SearchScreen from "./Search/SearchScreen";
 import LoginScreen from "./Auth/Login/LoginScreen";
 import SignUpScreen from "./Auth/SignUp/SignUpScreen";
+import ForgotPasswordScreen from "./Auth/ForgotPassword/ForgotPasswordScreen";
+import ResetPasswordScreen from "./Auth/ResetPassword/ResetPasswordScreen";
 
 export {
-    HomeScreen,
+    SettingsScreen,
     CalendarScreen,
+    SearchScreen,
     LoginScreen,
-    SignUpScreen
+    SignUpScreen,
+    ForgotPasswordScreen,
+    ResetPasswordScreen,
 }

@@ -1,12 +1,13 @@
 import {FormikConfig, useFormik} from "formik";
 import React, {FC} from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {CustomButton, CustomInput} from "../../common";
 import {LoginFormValuesType} from "../../../types/formsTypes";
 
 type LoginFormPropsType = FormikConfig<LoginFormValuesType>
 type LoginOtherPropsType = {
     setValidateOnChange: (value: boolean) => void
+    navigateToForgotScreen: () => void
 }
 
 const LoginForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
@@ -16,6 +17,7 @@ const LoginForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
         validationSchema,
         validateOnChange = true,
         setValidateOnChange,
+        navigateToForgotScreen,
     }) => {
 
     const { values, errors, handleSubmit, isSubmitting, handleChange } = useFormik({
@@ -44,7 +46,13 @@ const LoginForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                     error={errors.password && validateOnChange ? errors.password : ""}
                 />
             </View>
-            <View style={{ marginTop: 20 }}>
+            <TouchableOpacity
+                style={{ marginTop: 15, alignItems: "flex-end" }}
+                onPress={navigateToForgotScreen}
+            >
+                <Text style={styles.navLink}>Forgot</Text>
+            </TouchableOpacity>
+            <View style={{ marginTop: 25 }}>
                 <CustomButton
                     onPress={() => {
                         setValidateOnChange(true);
@@ -66,6 +74,9 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     formFieldContainer: {
-        marginTop: 20
-    }
+        marginTop: 50
+    },
+    navLink: {
+        color: "blue"
+    },
 })

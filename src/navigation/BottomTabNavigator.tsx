@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {BottomTabParamList} from "../types/navigationTypes";
-import {CalendarScreen, HomeScreen} from "../screens";
+import {CalendarScreen, SearchScreen, SettingsScreen} from "../screens";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -9,13 +9,18 @@ const BottomTabNavigator: FC = () => {
     return (
         <Tab.Navigator>
             <Tab.Screen
-                name={"Home"}
-                component={HomeScreen}
+                name={"Calendar"}
+                component={CalendarScreen}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
-                name={"Calendar"}
-                component={CalendarScreen}
+                name={"Search"}
+                component={SearchScreen}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name={"Settings"}
+                component={SettingsScreen}
                 options={{ headerShown: false }}
             />
         </Tab.Navigator>
