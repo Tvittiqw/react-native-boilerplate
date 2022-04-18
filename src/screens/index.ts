@@ -5,6 +5,7 @@ import LoginScreen from "./Auth/Login/LoginScreen";
 import SignUpScreen from "./Auth/SignUp/SignUpScreen";
 import ForgotPasswordScreen from "./Auth/ForgotPassword/ForgotPasswordScreen";
 import ResetPasswordScreen from "./Auth/ResetPassword/ResetPasswordScreen";
+import SplashScreen from "./Splash/SplashScreen";
 
 export {
     SettingsScreen,
@@ -14,4 +15,5 @@ export {
     SignUpScreen,
     ForgotPasswordScreen,
     ResetPasswordScreen,
+    SplashScreen,
 }

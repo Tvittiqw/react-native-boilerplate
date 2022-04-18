@@ -4,7 +4,7 @@ type UsersInfo = {
 }
 
 class FakeDB {
-    data: Array<UsersInfo> = [{ email: "filipovich.igor1999@gmail.com", password: "12345678Qa" }]
+    data: Array<UsersInfo> = [{ email: "filipovich.igor1999@gmail.com", password: "12345678Q@" }]
 
     async addUser(user: UsersInfo): Promise<string> {
         if (this.data.length) {

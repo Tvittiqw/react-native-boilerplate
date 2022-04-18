@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     formFieldContainer: {
-        marginTop: 50
+        marginTop: 35
     },
     navLink: {
         color: "blue"

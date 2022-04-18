@@ -20,7 +20,6 @@ const MyDarkTheme: Theme = {
     dark: true,
     colors: {
         ...DarkTheme.colors,
-        // background: "gray",
     }
 }
 

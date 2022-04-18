@@ -1,5 +1,5 @@
 import * as Yup from "yup"
-import {atLeastOneNumber} from "./regex";
+import {atLeastOneNumber, atLeastOneSpecialCharacter} from "./regex";
 
 export const commonValues = {
     firstName: Yup.string()
@@ -20,7 +20,8 @@ export const commonValues = {
     password: Yup.string()
         .required("Password is required!")
         .min(8, "At least 8 characters")
-        .matches(atLeastOneNumber, "At least one number"),
+        .matches(atLeastOneNumber, "At least one number")
+        .matches(atLeastOneSpecialCharacter, "At least one special character !@#$%^&*(),.?\":{}|<>"),
     confirmPassword: Yup.string()
         .required("Confirm password is required!")
         .oneOf([Yup.ref("password"), null], "Password should match"),

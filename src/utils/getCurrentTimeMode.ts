@@ -5,7 +5,7 @@ type TimeMode = "morning" | "evening"
 export const getCurrentTimeMode = (): TimeMode => {
     let mode: TimeMode = "morning";
     const morning = 7;
-    const evening = 18;
+    const evening = 19;
     const currentHour = Number(moment().format("HH"));
     if (currentHour >= morning && currentHour < evening) {
         mode = "morning";
