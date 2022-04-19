@@ -1,27 +1,12 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import LottieView from 'lottie-react-native';
 import {StyleSheet, View} from "react-native";
 
 type Props = {
-    setInitApp: (value: boolean) => void
+    setSplashAnimationFinish: (value: boolean) => void
 }
 
-const SplashScreen: FC<Props> = ({ setInitApp }) => {
-
-    const [isAuthInit, setAuthInit] = useState(false);
-    const [splashAnimationFinish, setSplashAnimationFinish] = useState(false);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setAuthInit(true)
-        }, 5000);
-    }, []);
-
-    useEffect(() => {
-        if (isAuthInit && splashAnimationFinish) {
-            setInitApp(true);
-        }
-    }, [isAuthInit, splashAnimationFinish])
+const SplashScreen: FC<Props> = ({ setSplashAnimationFinish }) => {
 
     return (
         <View style={styles.wrap}>

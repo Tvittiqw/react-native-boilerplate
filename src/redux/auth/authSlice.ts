@@ -11,7 +11,7 @@ interface InitialAuthStateType {
 
 const initialState: InitialAuthStateType = {
     userInfo: null,
-    isAuth: false,
+    isAuth: true,
     isLoading: false,
 }
 

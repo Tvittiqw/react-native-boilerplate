@@ -1,0 +1,15 @@
+{
+  "translation": {
+    "settings": {
+      "title": "Settings Screen",
+      "dynamic_theme": "Dynamic theme",
+      "change_lang": "Change language"
+    },
+    "calendar": {
+      "title": "Calendar Screen"
+    },
+    "search": {
+      "title": "Search Screen"
+    }
+  }
+}
