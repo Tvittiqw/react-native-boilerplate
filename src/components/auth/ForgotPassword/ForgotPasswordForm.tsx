@@ -3,6 +3,7 @@ import {StyleSheet, View} from "react-native";
 import {FormikConfig, useFormik} from "formik";
 import {ForgotPasswordFormValuesType} from "../../../types/formsTypes";
 import {CustomButton, CustomInput} from "../../common";
+import {useTranslation} from "react-i18next";
 
 type ForgotPasswordFormPropsType = FormikConfig<ForgotPasswordFormValuesType>
 
@@ -19,19 +20,21 @@ const ForgotPasswordForm: FC<ForgotPasswordFormPropsType> = (
         validationSchema
     })
 
+    const { t } = useTranslation();
+
     return (
         <View style={styles.form}>
             <CustomInput
                 value={values.email}
                 onChangeText={handleChange("email")}
-                placeholder="Enter Email"
+                placeholder={t('common.email_placeholder')}
                 onBlur={handleBlur("email")}
                 error={errors.email && touched.email ? errors.email : ""}
             />
             <View style={{ marginTop: 30 }}>
                 <CustomButton
                     onPress={handleSubmit}
-                    text="Next"
+                    text={t('forgot.next_button')}
                     disabled={isSubmitting}
                     loading={isSubmitting}
                 />

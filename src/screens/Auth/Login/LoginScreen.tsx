@@ -9,6 +9,7 @@ import {useTypedDispatch} from "../../../hooks/storeHooks/typedStoreHooks";
 import {fetchLoginForm} from "../../../redux/auth/authSlice";
 import {FormikHelpers} from "formik";
 import { useIsFocused } from '@react-navigation/native';
+import {useTranslation} from "react-i18next";
 
 type LoginNavigationProps = NavigationPropsType<"Login">
 
@@ -19,6 +20,8 @@ const LoginScreen: FC<LoginNavigationProps> = ({ navigation }) => {
     const dispatch = useTypedDispatch();
 
     const focused = useIsFocused();
+
+    const { t } = useTranslation();
 
     const submitLoginForm = async (formValues: LoginFormValuesType, action: FormikHelpers<LoginFormValuesType>) => {
         action.setSubmitting(true);
@@ -35,7 +38,7 @@ const LoginScreen: FC<LoginNavigationProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.wrapper}>
             <View style={styles.container}>
-                <Text style={styles.loginText}>Login</Text>
+                <Text style={styles.loginText}>{t('login.title')}</Text>
 
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -53,7 +56,7 @@ const LoginScreen: FC<LoginNavigationProps> = ({ navigation }) => {
                     />
 
                     <View style={{ marginTop: 30 }}>
-                        <Text>Or login with...</Text>
+                        <Text>{t('login.login_with_social')}</Text>
                     </View>
 
                     <View style={styles.socialContainer}>
@@ -70,9 +73,9 @@ const LoginScreen: FC<LoginNavigationProps> = ({ navigation }) => {
                     </View>
 
                     <View style={styles.registerContainer}>
-                        <Text>Don't have an account yet? Go to </Text>
+                        <Text>{t('login.dont_have_account')}</Text>
                         <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-                            <Text style={styles.navLink}>Register</Text>
+                            <Text style={styles.navLink}>{t('login.register_link')}</Text>
                         </TouchableOpacity>
                     </View>
 

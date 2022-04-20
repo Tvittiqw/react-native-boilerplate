@@ -11,7 +11,7 @@ const CalendarScreen: FC<NavigationProps> = ({ navigation }) => {
 
     return (
         <SafeAreaView>
-            <Text>{t('calendar.title')}</Text>
+            <Text>{t("calendar.title")}</Text>
         </SafeAreaView>
     );
 };

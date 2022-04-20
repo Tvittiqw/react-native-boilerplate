@@ -15,6 +15,19 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
     },
+    aboutContainer: {
+        marginTop: "auto"
+    },
+    logoutContainer: {
+        marginTop: "auto",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        paddingBottom: 40
+    },
+    navLink: {
+        color: "blue",
+        fontSize: 20,
+    }
 })
 
 export default styles;

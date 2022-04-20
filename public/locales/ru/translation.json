@@ -1,0 +1,46 @@
+{
+  "common": {
+    "email_placeholder": "Введите Email",
+    "password_placeholder": "Введите пароль",
+    "confirm_password_placeholder": "Подтвердите пароль"
+  },
+  "settings": {
+    "title": "Настройки",
+    "dynamic_theme": "Динамиская тема",
+    "change_lang": "Изменить язык",
+    "logout_text": "Выйти",
+    "about_link": "О приложении"
+  },
+  "calendar": {
+    "title": "Календарь"
+  },
+  "search": {
+    "title": "Поиск"
+  },
+  "login": {
+    "title": "Вход",
+    "forgot_text": "Забыли пароль?",
+    "login_with_social": "Войти с помощью ...",
+    "register_link": "Регистрацию",
+    "dont_have_account": "Еще не зарегестрированы? Перейти на ",
+    "button_text": "Войти"
+  },
+  "signup": {
+    "title": "Регистрация",
+    "login_link": "Вход",
+    "already_have_account": "Уже есть аккаунт? Перейти на ",
+    "firstname_placeholder": "Введите Имя",
+    "lastname_placeholder": "Введите Фамилию",
+    "id_placeholder": "Введите @id",
+    "button_text": "Зарегистрироваться"
+  },
+  "forgot": {
+    "title": "Забыли пароль",
+    "next_button": "Далее"
+  },
+  "reset_password": {
+    "title": "Сброс пароля",
+    "new_password_placeholder": "Введите новый пароль",
+    "reset_button_text": "Сбросить пароль"
+  }
+}

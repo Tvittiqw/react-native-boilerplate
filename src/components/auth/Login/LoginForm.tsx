@@ -3,6 +3,7 @@ import React, {FC} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {CustomButton, CustomInput} from "../../common";
 import {LoginFormValuesType} from "../../../types/formsTypes";
+import {useTranslation} from "react-i18next";
 
 type LoginFormPropsType = FormikConfig<LoginFormValuesType>
 type LoginOtherPropsType = {
@@ -27,13 +28,15 @@ const LoginForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
         validateOnChange
     });
 
+    const { t } = useTranslation();
+
     return (
         <View style={styles.loginForm}>
             <View style={styles.formFieldContainer}>
                 <CustomInput
                     value={values.email}
                     onChangeText={handleChange("email")}
-                    placeholder="Enter Email"
+                    placeholder={t('common.email_placeholder')}
                     error={errors.email && validateOnChange ? errors.email : ""}
                 />
             </View>
@@ -41,7 +44,7 @@ const LoginForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                 <CustomInput
                     value={values.password}
                     onChangeText={handleChange("password")}
-                    placeholder="Enter password"
+                    placeholder={t('common.password_placeholder', {ns: ""})}
                     passwordInput
                     error={errors.password && validateOnChange ? errors.password : ""}
                 />
@@ -50,7 +53,7 @@ const LoginForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                 style={{ marginTop: 15, alignItems: "flex-end" }}
                 onPress={navigateToForgotScreen}
             >
-                <Text style={styles.navLink}>Forgot</Text>
+                <Text style={styles.navLink}>{t('login.forgot_text')}</Text>
             </TouchableOpacity>
             <View style={{ marginTop: 25 }}>
                 <CustomButton
@@ -58,7 +61,7 @@ const LoginForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                         setValidateOnChange(true);
                         handleSubmit()
                     }}
-                    text="Login"
+                    text={t('login.button_text')}
                     disabled={isSubmitting}
                     loading={isSubmitting}
                 />

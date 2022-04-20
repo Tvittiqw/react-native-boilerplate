@@ -3,6 +3,7 @@ import React, {FC} from "react";
 import {StyleSheet, View} from "react-native";
 import {CustomButton, CustomInput} from "../../common";
 import {SignUpFormValuesType} from "../../../types/formsTypes";
+import {useTranslation} from "react-i18next";
 
 type LoginFormPropsType = FormikConfig<SignUpFormValuesType>
 type LoginOtherPropsType = {
@@ -25,13 +26,15 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
         validateOnChange
     });
 
+    const { t } = useTranslation();
+
     return (
         <View style={styles.signupForm}>
             <View style={styles.formFieldContainer}>
                 <CustomInput
                     value={values.firstName}
                     onChangeText={handleChange("firstName")}
-                    placeholder="Enter firstname"
+                    placeholder={t('signup.firstname_placeholder')}
                     error={errors.firstName && validateOnChange ? errors.firstName : ""}
                 />
             </View>
@@ -39,7 +42,7 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                 <CustomInput
                     value={values.lastName}
                     onChangeText={handleChange("lastName")}
-                    placeholder="Enter lastname"
+                    placeholder={t('signup.lastname_placeholder')}
                     error={errors.lastName && validateOnChange ? errors.lastName : ""}
                 />
             </View>
@@ -47,7 +50,7 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                 <CustomInput
                     value={values.id}
                     onChangeText={handleChange("id")}
-                    placeholder="Enter id"
+                    placeholder={t('signup.id_placeholder')}
                     error={errors.id && validateOnChange ? errors.id : ""}
                 />
             </View>
@@ -55,7 +58,7 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                 <CustomInput
                     value={values.email}
                     onChangeText={handleChange("email")}
-                    placeholder="Enter Email"
+                    placeholder={t('common.email_placeholder')}
                     error={errors.email && validateOnChange ? errors.email : ""}
                 />
             </View>
@@ -63,7 +66,7 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                 <CustomInput
                     value={values.password}
                     onChangeText={handleChange("password")}
-                    placeholder="Enter password"
+                    placeholder={t('common.password_placeholder')}
                     passwordInput
                     error={errors.password && validateOnChange ? errors.password : ""}
                 />
@@ -72,7 +75,7 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                 <CustomInput
                     value={values.confirmPassword}
                     onChangeText={handleChange("confirmPassword")}
-                    placeholder="Confirm password"
+                    placeholder={t('common.confirm_password_placeholder')}
                     passwordInput
                     error={errors.confirmPassword && validateOnChange ? errors.confirmPassword : ""}
                 />
@@ -83,7 +86,7 @@ const SignUpForm: FC<LoginFormPropsType & LoginOtherPropsType> = (
                         setValidateOnChange(true);
                         handleSubmit()
                     }}
-                    text="Sign Up"
+                    text={t('signup.button_text')}
                     disabled={isSubmitting}
                     loading={isSubmitting}
                 />

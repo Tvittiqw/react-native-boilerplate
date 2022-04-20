@@ -7,10 +7,13 @@ import {ForgotPasswordForm} from "../../../components/auth";
 import {ForgotPasswordFormValuesType} from "../../../types/formsTypes";
 import {FormikHelpers} from "formik";
 import {forgotValidationSchema} from "../../../validators/forgotAndRessetPassValidSchema";
+import {useTranslation} from "react-i18next";
 
 type ForgotPasswordNavigationProps = NavigationPropsType<"ForgotPassword">
 
 const ForgotPasswordScreen: FC<ForgotPasswordNavigationProps> = ({ navigation }) => {
+
+    const { t } = useTranslation();
 
     const submitLoginForm = async (formValues: ForgotPasswordFormValuesType, action: FormikHelpers<ForgotPasswordFormValuesType>) => {
         action.setSubmitting(true);
@@ -22,10 +25,10 @@ const ForgotPasswordScreen: FC<ForgotPasswordNavigationProps> = ({ navigation })
     return (
         <SafeAreaView style={styles.wrapper}>
             <View style={{ paddingHorizontal: 16 }}>
-                <Header title="Forgot Password" goBack/>
+                <Header title={t('forgot.title')} goBack/>
             </View>
             <View style={styles.container}>
-                <Text style={styles.title}>Forgot Password</Text>
+                <Text style={styles.title}>{t('forgot.title')}</Text>
                 <ForgotPasswordForm
                     initialValues={{ email: "" }}
                     onSubmit={submitLoginForm}

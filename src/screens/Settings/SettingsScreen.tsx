@@ -84,7 +84,19 @@ const SettingsScreen: FC<NavigationProps> = ({ navigation }) => {
                         <Text>{t('settings.change_lang')}</Text>
                     </RNPickerSelect>
                     )
-                    }
+                }
+
+                <TouchableOpacity
+                    style={styles.aboutContainer}
+                >
+                    <Text style={styles.navLink}>{t('settings.about_link')}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.logoutContainer}
+                >
+                    <Text style={styles.navLink}>{t('settings.logout_text')}</Text>
+                </TouchableOpacity>
 
             </View>
         </SafeAreaView>

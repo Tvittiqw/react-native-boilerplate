@@ -8,6 +8,7 @@ import signupValidationSchema from "../../../validators/signupValidationSchema";
 import {useTypedDispatch} from "../../../hooks/storeHooks/typedStoreHooks";
 import {fetchSignUpForm} from "../../../redux/auth/authSlice";
 import {FormikHelpers} from "formik";
+import {useTranslation} from "react-i18next";
 
 type SignUpNavigationProps = NavigationPropsType<"SignUp">
 
@@ -16,6 +17,8 @@ const SignUpScreen: FC<SignUpNavigationProps> = ({ navigation }) => {
     const [validateOnChange, setValidateOnChange] = useState(false);
 
     const dispatch = useTypedDispatch();
+
+    const { t } = useTranslation();
 
     const submitSignUpForm = async (formValues: SignUpFormValuesType, action: FormikHelpers<SignUpFormValuesType>) => {
         action.setSubmitting(true);
@@ -27,7 +30,7 @@ const SignUpScreen: FC<SignUpNavigationProps> = ({ navigation }) => {
         <SafeAreaView style={styles.wrapper}>
             <View style={styles.container}>
 
-                <Text style={styles.signupText}>Sign Up</Text>
+                <Text style={styles.signupText}>{t('signup.title')}</Text>
 
                 <ScrollView
                     showsVerticalScrollIndicator={false}
@@ -50,9 +53,9 @@ const SignUpScreen: FC<SignUpNavigationProps> = ({ navigation }) => {
                     />
 
                     <View style={styles.loginContainer}>
-                        <Text>Already have an account? Go to </Text>
+                        <Text>{t('signup.already_have_account')}</Text>
                         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                            <Text style={styles.navLink}>Login</Text>
+                            <Text style={styles.navLink}>{t('signup.login_link')}</Text>
                         </TouchableOpacity>
                     </View>
 

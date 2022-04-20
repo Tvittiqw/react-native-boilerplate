@@ -3,6 +3,7 @@ import {StyleSheet, View} from "react-native";
 import {FormikConfig, useFormik} from "formik";
 import {ResetPasswordFormValuesType} from "../../../types/formsTypes";
 import {CustomButton, CustomInput} from "../../common";
+import {useTranslation} from "react-i18next";
 
 type FormPropsType = FormikConfig<ResetPasswordFormValuesType>
 
@@ -12,6 +13,8 @@ const ResetPasswordForm: FC<FormPropsType> = (formikProps) => {
         ...formikProps
     })
 
+    const { t } = useTranslation();
+
     return (
         <View style={styles.form}>
             <View style={styles.formFieldContainer}>
@@ -19,7 +22,7 @@ const ResetPasswordForm: FC<FormPropsType> = (formikProps) => {
                     value={values.password}
                     onChangeText={handleChange("password")}
                     onBlur={handleBlur("password")}
-                    placeholder="Enter new password"
+                    placeholder={t('reset_password.new_password_placeholder')}
                     passwordInput
                     error={errors.password && touched.password ? errors.password : ""}
                 />
@@ -30,7 +33,7 @@ const ResetPasswordForm: FC<FormPropsType> = (formikProps) => {
                     value={values.confirmPassword}
                     onChangeText={handleChange("confirmPassword")}
                     onBlur={handleBlur("confirmPassword")}
-                    placeholder="Confirm password"
+                    placeholder={t('common.confirm_password_placeholder')}
                     passwordInput
                     error={errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : ""}
                 />
@@ -39,7 +42,7 @@ const ResetPasswordForm: FC<FormPropsType> = (formikProps) => {
             <View style={styles.buttonContainer}>
                 <CustomButton
                     onPress={handleSubmit}
-                    text="Reset password"
+                    text={t('reset_password.reset_button_text')}
                     disabled={isSubmitting}
                     loading={isSubmitting}
                 />

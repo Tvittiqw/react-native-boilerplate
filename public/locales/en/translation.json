@@ -1,0 +1,46 @@
+{
+  "common": {
+    "email_placeholder": "Enter email",
+    "password_placeholder": "Enter password",
+    "confirm_password_placeholder": "Confirm password"
+  },
+  "settings": {
+    "title": "Settings Screen",
+    "dynamic_theme": "Dynamic theme",
+    "change_lang": "Change language",
+    "logout_text": "Logout",
+    "about_link": "About an app"
+  },
+  "calendar": {
+    "title": "Calendar Screen"
+  },
+  "search": {
+    "title": "Search Screen"
+  },
+  "login": {
+    "title": "Login",
+    "forgot_text": "Forgot password?",
+    "login_with_social": "Or login with...",
+    "register_link": "Register",
+    "dont_have_account": "Don't have an account yet? Go to ",
+    "button_text": "Login"
+  },
+  "signup": {
+    "title": "Sign Up",
+    "login_link": "Login",
+    "already_have_account": "Already have an account? Go to ",
+    "firstname_placeholder": "Enter firstname",
+    "lastname_placeholder": "Enter firstname",
+    "id_placeholder": "Enter @id",
+    "button_text": "Sign Up"
+  },
+  "forgot": {
+    "title": "Forgot password",
+    "next_button": "Next"
+  },
+  "reset_password": {
+    "title": "Reset password",
+    "new_password_placeholder": "Enter new password",
+    "reset_button_text": "Reset password"
+  }
+}

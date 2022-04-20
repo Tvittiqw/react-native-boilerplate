@@ -1,5 +1,5 @@
-import en from "./en/en.json";
-import ru from "./ru/ru.json"
+import en from "../../../public/locales/en/translation.json";
+import ru from "../../../public/locales/ru/translation.json"
 
 type LanguagesType = {
     en: typeof en
