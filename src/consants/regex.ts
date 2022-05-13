@@ -1,8 +1,5 @@
 const atLeastOneNumber = /.*[0-9].*/;
 
-const atLeastOneSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/
+const atLeastOneSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/;
 
-export {
-    atLeastOneNumber,
-    atLeastOneSpecialCharacter,
-}
+export {atLeastOneNumber, atLeastOneSpecialCharacter};

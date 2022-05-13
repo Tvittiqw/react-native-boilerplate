@@ -1,4 +1,4 @@
 export interface UserInfoType {
-    email: string | null
-    accessToken: string | null
+  email: string | null;
+  accessToken: string | null;
 }

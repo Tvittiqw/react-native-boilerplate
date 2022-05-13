@@ -1,4 +1,4 @@
-import {BottomTabParamList, RootStackParamList} from "../types/navigationTypes";
+import {BottomTabParamList, RootStackParamList} from '../types/navigationTypes';
 
 // type RoutesType = {
 //     [key: string]: keyof RootStackParamList

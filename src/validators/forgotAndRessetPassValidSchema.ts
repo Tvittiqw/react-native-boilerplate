@@ -1,13 +1,13 @@
-import * as Yup from "yup";
-import {commonValues} from "./commonValues";
+import * as Yup from 'yup';
+import {commonValues} from './commonValues';
 
-const { email, password, confirmPassword } = commonValues;
+const {email, password, confirmPassword} = commonValues;
 
 export const forgotValidationSchema = Yup.object({
-    email
+  email,
 });
 
 export const resetPasswordValidationSchema = Yup.object({
-    password,
-    confirmPassword
-})
+  password,
+  confirmPassword,
+});
