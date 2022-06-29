@@ -13,9 +13,13 @@ import {DynamicTheme} from '../../navigation/StackNavigator';
 import RNPickerSelect from 'react-native-picker-select';
 import appLanguagesList from '../../consants/languages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../redux/auth/authSlice';
 
 const SettingsScreen = ({navigation}) => {
   const {t, i18n} = useTranslation();
+
+  const dispatch = useDispatch();
 
   const [selectedLanguage, setSelectedLanguage] = useState(() =>
     appLanguagesList.find(el => el.value === i18n.language),
@@ -38,6 +42,10 @@ const SettingsScreen = ({navigation}) => {
       setSelected(false);
     }
   }, [isSelected, setupLanguageHandler]);
+
+  const onLogoutPress = async () => {
+    dispatch(logout());
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -86,7 +94,9 @@ const SettingsScreen = ({navigation}) => {
           <Text style={styles.navLink}>{t('settings.about_link')}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.logoutContainer}>
+        <TouchableOpacity
+          style={styles.logoutContainer}
+          onPress={() => onLogoutPress()}>
           <Text style={styles.navLink}>{t('settings.logout_text')}</Text>
         </TouchableOpacity>
       </View>

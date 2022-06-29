@@ -4,11 +4,7 @@ import {useFormik} from 'formik';
 import {CustomButton, CustomInput} from '../../common';
 import {useTranslation} from 'react-i18next';
 
-const ForgotPasswordForm = ({
-  initialValues,
-  onSubmit,
-  validationSchema,
-}) => {
+const ForgotPasswordForm = ({initialValues, onSubmit, validationSchema}) => {
   const {
     values,
     touched,

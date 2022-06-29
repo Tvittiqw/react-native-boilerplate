@@ -2,7 +2,8 @@
   "common": {
     "email_placeholder": "Enter email",
     "password_placeholder": "Enter password",
-    "confirm_password_placeholder": "Confirm password"
+    "confirm_password_placeholder": "Confirm password ",
+    "username_placeholder": "Username"
   },
   "settings": {
     "title": "Settings Screen",
@@ -29,10 +30,11 @@
     "title": "Sign Up",
     "login_link": "Login",
     "already_have_account": "Already have an account? Go to ",
-    "firstname_placeholder": "Enter firstname",
-    "lastname_placeholder": "Enter firstname",
-    "id_placeholder": "Enter @id",
-    "button_text": "Sign Up"
+    "firstname_placeholder": "First name",
+    "lastname_placeholder": "Last name",
+    "username_placeholder": "@username",
+    "button_text_first": "Next",
+    "button_text_second": "Sign up"
   },
   "forgot": {
     "title": "Forgot password",

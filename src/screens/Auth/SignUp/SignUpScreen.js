@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
+  KeyboardAvoidingView,
   Text,
   TouchableOpacity,
   View,
@@ -10,56 +11,80 @@ import {SignUpForm} from '../../../components/auth';
 import styles from './styles';
 import signupValidationSchema from '../../../validators/signupValidationSchema';
 import {useTypedDispatch} from '../../../hooks/storeHooks/typedStoreHooks';
-import {fetchSignUpForm} from '../../../redux/auth/authSlice';
+import {signUpRequest} from '../../../redux/auth/authSlice';
 import {useTranslation} from 'react-i18next';
 
 const SignUpScreen = ({navigation}) => {
-  const [validateOnChange, setValidateOnChange] = useState(false);
-
+  const [activeStep, setActiveStep] = useState('first');
+  const currentValidationSchema = signupValidationSchema[activeStep];
+  const [validateFirstStepOnChange, setValidateFirstStepOnChange] =
+    useState(false);
+  const [validateSecondStepOnChange, setValidateSecondStepOnChange] =
+    useState(false);
   const dispatch = useTypedDispatch();
 
   const {t} = useTranslation();
 
-  const submitSignUpForm = async (
-    formValues,
-    action,
-  ) => {
-    action.setSubmitting(true);
-    await dispatch(fetchSignUpForm(formValues));
-    action.setSubmitting(false);
+  const submitSignUpForm = async (formValues, action) => {
+    if (activeStep === 'second') {
+      action.setSubmitting(true);
+      await dispatch(signUpRequest(formValues));
+      action.setSubmitting(false);
+      navigation.push('BottomTab');
+    } else {
+      setActiveStep('second');
+      action.setTouched({});
+      action.setSubmitting(false);
+    }
   };
+
+  function handleBack() {
+    setActiveStep('first');
+  }
 
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
         <Text style={styles.signupText}>{t('signup.title')}</Text>
+        {activeStep === 'second' && (
+          <TouchableOpacity onPress={() => handleBack()}>
+            <View>
+              <Text>Back</Text>
+            </View>
+          </TouchableOpacity>
+        )}
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{width: '100%'}}
-          contentContainerStyle={{paddingBottom: 20}}>
-          <SignUpForm
-            initialValues={{
-              firstName: '',
-              lastName: '',
-              userName: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-            }}
-            onSubmit={submitSignUpForm}
-            validationSchema={signupValidationSchema}
-            setValidateOnChange={setValidateOnChange}
-            validateOnChange={validateOnChange}
-          />
+        <KeyboardAvoidingView style={{width: '100%'}} behavior={'position'}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <SignUpForm
+              step={activeStep}
+              initialValues={{
+                firstName: '',
+                lastName: '',
+                userName: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+              }}
+              onSubmit={submitSignUpForm}
+              setActiveStep={setActiveStep}
+              validationSchema={currentValidationSchema}
+              setValidateFirstStepOnChange={setValidateFirstStepOnChange}
+              validateFirstStepOnChange={validateFirstStepOnChange}
+              setValidateSecondStepOnChange={setValidateSecondStepOnChange}
+              validateSecondStepOnChange={validateSecondStepOnChange}
+            />
 
-          <View style={styles.loginContainer}>
-            <Text>{t('signup.already_have_account')}</Text>
-            <TouchableOpacity onPress={() => navigation.push('Login')}>
-              <Text style={styles.navLink}>{t('signup.login_link')}</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+            {activeStep === 'first' && (
+              <View style={styles.loginContainer}>
+                <Text>{t('signup.already_have_account')}</Text>
+                <TouchableOpacity onPress={() => navigation.push('Login')}>
+                  <Text style={styles.navLink}>{t('signup.login_link')}</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     </SafeAreaView>
   );

@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, {createContext, useCallback, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {Appearance} from 'react-native';
 import {
@@ -18,7 +13,9 @@ import {
   ResetPasswordScreen,
   SignUpScreen,
 } from '../screens';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage, {
+  useAsyncStorage,
+} from '@react-native-async-storage/async-storage';
 import BottomTabNavigator from './BottomTabNavigator';
 
 const Stack = createNativeStackNavigator();
@@ -30,8 +27,24 @@ const StackNavigator = ({dynamicThemeStatus}) => {
     useState(dynamicThemeStatus);
   const [isChangeThemeByToggle, setChangeThemeByToggle] = useState(false);
   const [appTheme, setAppTheme] = useState();
+  const [token, setToken] = useState();
 
   const {isAuth} = useSelector(state => state.auth);
+
+  //todo add token verification and not logout after app closed
+
+  // const getToken = async () => {
+  //   try {
+  //     const data = await AsyncStorage.getItem('@Token');
+  //     setToken(data);
+  //   } catch (e) {
+  //     console.log('error', e);
+  //   }
+  // };
+  //
+  // useEffect(() => {
+  //   getToken();
+  // }, []);
 
   const themeContextValue = {
     isDynamic: isDynamicallyThemeChange,

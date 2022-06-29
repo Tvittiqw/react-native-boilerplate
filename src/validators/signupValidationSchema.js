@@ -1,16 +1,18 @@
 import * as Yup from 'yup';
 import {commonValues} from './commonValues';
 
-const {firstName, lastName, id, email, password, confirmPassword} =
+const {firstName, lastName, userName, email, password, confirmPassword} =
   commonValues;
 
-const signupValidationSchema = Yup.object({
-  firstName,
-  lastName,
-  id,
-  email,
-  password,
-  confirmPassword,
-});
-
-export default signupValidationSchema;
+export default {
+  first: Yup.object().shape({
+    email,
+    password,
+    confirmPassword,
+  }),
+  second: Yup.object().shape({
+    firstName,
+    lastName,
+    userName,
+  }),
+};

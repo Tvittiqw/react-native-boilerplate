@@ -2,7 +2,8 @@
   "common": {
     "email_placeholder": "Введите Email",
     "password_placeholder": "Введите пароль",
-    "confirm_password_placeholder": "Подтвердите пароль"
+    "confirm_password_placeholder": "Подтвердите пароль",
+    "username_placeholder": "Юзернейм"
   },
   "settings": {
     "title": "Настройки",
@@ -31,8 +32,9 @@
     "already_have_account": "Уже есть аккаунт? Перейти на ",
     "firstname_placeholder": "Введите Имя",
     "lastname_placeholder": "Введите Фамилию",
-    "id_placeholder": "Введите @id",
-    "button_text": "Зарегистрироваться"
+    "username_placeholder": "Введите @username",
+    "button_text_first": "Далее",
+    "button_text_second": "Зарегистрироваться"
   },
   "forgot": {
     "title": "Забыли пароль",

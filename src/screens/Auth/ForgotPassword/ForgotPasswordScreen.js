@@ -6,15 +6,10 @@ import {ForgotPasswordForm} from '../../../components/auth';
 import {forgotValidationSchema} from '../../../validators/forgotAndRessetPassValidSchema';
 import {useTranslation} from 'react-i18next';
 
-const ForgotPasswordScreen = ({
-  navigation,
-}) => {
+const ForgotPasswordScreen = ({navigation}) => {
   const {t} = useTranslation();
 
-  const submitLoginForm = async (
-    formValues,
-    action,
-  ) => {
+  const submitLoginForm = async (formValues, action) => {
     action.setSubmitting(true);
     console.warn('email ===>', formValues);
     action.setSubmitting(false);

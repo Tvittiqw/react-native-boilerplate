@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     flexDirection: 'row',
   },
+  lottie: {
+    width: 100,
+    height: 100,
+  },
 });
 
 export default styles;

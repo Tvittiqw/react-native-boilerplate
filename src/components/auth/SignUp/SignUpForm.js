@@ -1,88 +1,123 @@
-import {useFormik} from 'formik';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {useFormik} from 'formik';
+import {View, Text, Image} from 'react-native';
 import {CustomButton, CustomInput} from '../../common';
 import {useTranslation} from 'react-i18next';
+import {credentialFields, personalData} from '../../../consants/registerFields';
+import styles from './styles';
 
 const SignUpForm = ({
   initialValues,
   onSubmit,
   validationSchema,
-  validateOnChange = true,
-  setValidateOnChange,
+  step,
+  setValidateFirstStepOnChange,
+  validateFirstStepOnChange,
+  setValidateSecondStepOnChange,
+  validateSecondStepOnChange,
+  setActiveStep,
 }) => {
   const {values, errors, handleSubmit, isSubmitting, handleChange} = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
-    validateOnChange,
+    step,
+    setValidateFirstStepOnChange,
+    validateFirstStepOnChange,
+    setValidateSecondStepOnChange,
+    validateSecondStepOnChange,
+    setActiveStep,
   });
 
+  const renderStepper = step => {
+    return (
+      <View style={styles.stepperWrapper}>
+        <View style={[styles.circle, step === 'first' && styles.activeCircle]}>
+          {step === 'second' ? (
+            <Image
+              source={require('../../../assets/icons/check.png')}
+              style={{width: 10, height: 10}}
+            />
+          ) : (
+            <Text style={styles.stepperText}>1</Text>
+          )}
+        </View>
+        <View style={styles.line} />
+        <View style={[styles.circle, step === 'second' && styles.activeCircle]}>
+          <Text style={styles.stepperText}>2</Text>
+        </View>
+      </View>
+    );
+  };
+
+  const buttonText = step => {
+    if (step === 'first') {
+      return t('signup.button_text_first');
+    } else {
+      return t('signup.button_text_second');
+    }
+  };
+
   const {t} = useTranslation();
+  console.log(validateFirstStepOnChange, validateSecondStepOnChange);
+  console.log('errors', errors);
+  console.log('values', values);
 
   return (
     <View style={styles.signupForm}>
-      <View style={styles.formFieldContainer}>
-        <CustomInput
-          value={values.firstName}
-          onChangeText={handleChange('firstName')}
-          placeholder={t('signup.firstname_placeholder')}
-          error={errors.firstName && validateOnChange ? errors.firstName : ''}
-        />
-      </View>
-      <View style={styles.formFieldContainer}>
-        <CustomInput
-          value={values.lastName}
-          onChangeText={handleChange('lastName')}
-          placeholder={t('signup.lastname_placeholder')}
-          error={errors.lastName && validateOnChange ? errors.lastName : ''}
-        />
-      </View>
-      <View style={styles.formFieldContainer}>
-        <CustomInput
-          value={values.id}
-          onChangeText={handleChange('username')}
-          placeholder={t('signup.username_placeholder')}
-          error={errors.id && validateOnChange ? errors.id : ''}
-        />
-      </View>
-      <View style={styles.formFieldContainer}>
-        <CustomInput
-          value={values.email}
-          onChangeText={handleChange('email')}
-          placeholder={t('common.email_placeholder')}
-          error={errors.email && validateOnChange ? errors.email : ''}
-        />
-      </View>
-      <View style={styles.formFieldContainer}>
-        <CustomInput
-          value={values.password}
-          onChangeText={handleChange('password')}
-          placeholder={t('common.password_placeholder')}
-          passwordInput
-          error={errors.password && validateOnChange ? errors.password : ''}
-        />
-      </View>
-      <View style={styles.formFieldContainer}>
-        <CustomInput
-          value={values.confirmPassword}
-          onChangeText={handleChange('confirmPassword')}
-          placeholder={t('common.confirm_password_placeholder')}
-          passwordInput
-          error={
-            errors.confirmPassword && validateOnChange
-              ? errors.confirmPassword
-              : ''
-          }
-        />
-      </View>
+      {renderStepper(step)}
+      {step === 'first' ? (
+        <View style={styles.formFieldContainer}>
+          {credentialFields.map((item, index) => {
+            return (
+              <View key={item.id} style={styles.formFieldContainer}>
+                <CustomInput
+                  value={values[item.name]}
+                  onChangeText={handleChange(item.name)}
+                  placeholder={t(item.placeholder)}
+                  passwordInput={item.isPassword}
+                  error={
+                    errors[item.name] && validateFirstStepOnChange
+                      ? errors[item.name]
+                      : ''
+                  }
+                />
+              </View>
+            );
+          })}
+        </View>
+      ) : (
+        <View style={styles.formFieldContainer}>
+          {personalData.map((item, index) => {
+            return (
+              <View key={item.id} style={styles.formFieldContainer}>
+                <CustomInput
+                  value={values[item.name]}
+                  onChangeText={handleChange(item.name)}
+                  placeholder={t(item.placeholder)}
+                  error={
+                    errors[item.name] && validateSecondStepOnChange
+                      ? errors[item.name]
+                      : ''
+                  }
+                />
+              </View>
+            );
+          })}
+        </View>
+      )}
       <View style={{marginTop: 50}}>
         <CustomButton
           onPress={() => {
-            setValidateOnChange(true);
-            handleSubmit();
+            if (step === 'second') {
+              setValidateSecondStepOnChange(true);
+              handleSubmit();
+            } else {
+              setValidateFirstStepOnChange(true);
+              handleSubmit();
+            }
           }}
-          text={t('signup.button_text')}
+          text={buttonText(step)}
           disabled={isSubmitting}
           loading={isSubmitting}
         />
@@ -92,12 +127,3 @@ const SignUpForm = ({
 };
 
 export default SignUpForm;
-
-const styles = StyleSheet.create({
-  signupForm: {
-    width: '100%',
-  },
-  formFieldContainer: {
-    marginTop: 50,
-  },
-});

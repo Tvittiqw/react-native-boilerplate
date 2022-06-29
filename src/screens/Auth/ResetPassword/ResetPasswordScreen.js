@@ -6,15 +6,10 @@ import {ResetPasswordForm} from '../../../components/auth';
 import {resetPasswordValidationSchema} from '../../../validators/forgotAndRessetPassValidSchema';
 import {useTranslation} from 'react-i18next';
 
-const ResetPasswordScreen = ({
-  navigation,
-}) => {
+const ResetPasswordScreen = ({navigation}) => {
   const {t} = useTranslation();
 
-  const submitResetPasswordForm = async (
-    formValues,
-    action,
-  ) => {
+  const submitResetPasswordForm = async (formValues, action) => {
     action.setSubmitting(true);
     console.warn('email ===>', formValues);
     action.setSubmitting(false);

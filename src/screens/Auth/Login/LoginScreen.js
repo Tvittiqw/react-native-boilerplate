@@ -11,12 +11,18 @@ import {LoginForm} from '../../../components/auth';
 import styles from './styles';
 import loginValidationSchema from '../../../validators/loginValidationSchema';
 import {useTypedDispatch} from '../../../hooks/storeHooks/typedStoreHooks';
-import {fetchLoginForm} from '../../../redux/auth/authSlice';
+import {loginRequest} from '../../../redux/auth/authSlice';
 import {useIsFocused} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import AnimatedLoader from 'react-native-animated-loader';
 
 const LoginScreen = ({navigation}) => {
   const [validateOnChange, setValidateOnChange] = useState(false);
+
+  const isLoading = useSelector(state => state.auth.isLoading);
+  const isError = useSelector(state => state.auth.isError);
+  const errorMessage = useSelector(state => state.auth.error);
 
   const dispatch = useTypedDispatch();
 
@@ -26,7 +32,7 @@ const LoginScreen = ({navigation}) => {
 
   const submitLoginForm = async (formValues, action) => {
     action.setSubmitting(true);
-    await dispatch(fetchLoginForm(formValues));
+    await dispatch(loginRequest(formValues));
     action.setSubmitting(false);
   };
 
@@ -52,7 +58,17 @@ const LoginScreen = ({navigation}) => {
             validateOnChange={validateOnChange}
             setValidateOnChange={setValidateOnChange}
             navigateToForgotScreen={() => navigation.navigate('ForgotPassword')}
+            isError={isError}
+            errorMessage={errorMessage}
           />
+          <AnimatedLoader
+            visible={isLoading}
+            overlayColor="rgba(255,255,255,0.75)"
+            source={require('../../../config/loader.json')}
+            animationStyle={styles.lottie}
+            speed={1}>
+            <Text>Doing something...</Text>
+          </AnimatedLoader>
 
           <View style={{marginTop: 30}}>
             <Text>{t('login.login_with_social')}</Text>

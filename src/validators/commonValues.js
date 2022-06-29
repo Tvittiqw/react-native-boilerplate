@@ -10,8 +10,7 @@ export const commonValues = {
     .required('Last name is required!')
     .min(2, 'Enter 2 characters at least')
     .max(15, 'Name can be 15 characters or less'),
-  username: Yup.string()
-    .required('username is required!')
+  userName: Yup.string()
     .min(2, 'Enter 2 characters at least')
     .max(20, 'Name can be 20 characters or less'),
   email: Yup.string()
@@ -21,10 +20,10 @@ export const commonValues = {
     .required('Password is required!')
     .min(8, 'At least 8 characters')
     .matches(atLeastOneNumber, 'At least one number'),
-    // .matches(
-    //   atLeastOneSpecialCharacter,
-    //   'At least one special character !@#$%^&*(),.?":{}|<>',
-    // ),
+  // .matches(
+  //   atLeastOneSpecialCharacter,
+  //   'At least one special character !@#$%^&*(),.?":{}|<>',
+  // ),
   confirmPassword: Yup.string()
     .required('Confirm password is required!')
     .oneOf([Yup.ref('password'), null], 'Password should match'),

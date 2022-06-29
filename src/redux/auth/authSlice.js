@@ -1,28 +1,48 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {signUp, login} from '../../requests/auth'
+import {signUp, login} from '../../requests/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   userInfo: null,
   isAuth: false,
   isLoading: false,
+  isError: false,
+  error: '',
 };
 
-export const fetchLoginForm = createAsyncThunk('auth/login', async (loginFormData, thunkApi) => {
-  try {
-    const data = await login(loginFormData);
-    return data;
-  } catch (err) {
-    return thunkApi.rejectWithValue(err);
-  }
-});
+export const loginRequest = createAsyncThunk(
+  'auth/login',
+  async (loginFormData, thunkApi) => {
+    try {
+      const data = await login(loginFormData);
+      if (data) {
+        await AsyncStorage.setItem('@Token', data.tokens.access.token);
+        return thunkApi.fulfillWithValue(data);
+      }
+    } catch (err) {
+      return thunkApi.rejectWithValue(err);
+    }
+  },
+);
 
-export const fetchSignUpForm = createAsyncThunk('auth/login', async (signupFormData, thunkApi) => {
-  try {
-    const data = await signUp(signupFormData);
-    return data;
-  } catch (err) {
-    return thunkApi.rejectWithValue(err);
-  }
+export const signUpRequest = createAsyncThunk(
+  'auth/signUp',
+  async (signupFormData, thunkApi) => {
+    try {
+      const data = await signUp(signupFormData);
+      if (data) {
+        await AsyncStorage.setItem('@Token', data.tokens.access.token);
+        return thunkApi.fulfillWithValue(data);
+      }
+    } catch (err) {
+      return thunkApi.rejectWithValue(err);
+    }
+  },
+);
+
+export const logout = createAsyncThunk('auth/logout', async () => {
+  console.log('worked');
+  await AsyncStorage.removeItem('@Token');
 });
 
 const authSlice = createSlice({
@@ -30,33 +50,45 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchLoginForm.pending.type]: state => {
+    [loginRequest.pending.type]: state => {
       state.isLoading = true;
+      state.isError = false;
+      state.error = '';
     },
-    [fetchLoginForm.fulfilled.type]: (
-      state,
-      {payload},
-    ) => {
-      state.userInfo = {email: payload, accessToken: payload};
+    [loginRequest.fulfilled.type]: (state, {payload}) => {
+      state.userInfo = {
+        user: payload.user,
+        accessToken: payload.tokens.access.token,
+      };
       state.isAuth = true;
       state.isLoading = false;
     },
-    [fetchLoginForm.rejected.type]: state => {
+    [loginRequest.rejected.type]: (state, {payload}) => {
       state.isLoading = false;
       state.isAuth = false;
+      state.isError = true;
+      state.error = payload.message;
     },
-    [fetchSignUpForm.pending.type]: state => {
+    [signUpRequest.pending.type]: state => {
       state.isLoading = true;
+      state.isError = false;
+      state.error = '';
     },
-    [fetchSignUpForm.fulfilled.type]: (
-      state,
-      {payload},
-    ) => {
-      state.userInfo = {email: payload, accessToken: payload};
+    [signUpRequest.fulfilled.type]: (state, {payload}) => {
+      state.userInfo = {
+        user: payload.user,
+        accessToken: payload.tokens.access.token,
+      };
       state.isAuth = true;
       state.isLoading = false;
     },
-    [fetchSignUpForm.rejected.type]: state => {
+    [signUpRequest.rejected.type]: (state, {payload}) => {
+      state.isLoading = false;
+      state.isAuth = false;
+      state.isError = true;
+      state.error = payload.message;
+    },
+    [logout.fulfilled.type]: state => {
       state.isLoading = false;
       state.isAuth = false;
     },

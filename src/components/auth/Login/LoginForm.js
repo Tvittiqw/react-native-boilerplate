@@ -11,6 +11,8 @@ const LoginForm = ({
   validateOnChange = true,
   setValidateOnChange,
   navigateToForgotScreen,
+  isError,
+  errorMessage,
 }) => {
   const {values, errors, handleSubmit, isSubmitting, handleChange} = useFormik({
     initialValues,
@@ -56,6 +58,11 @@ const LoginForm = ({
           loading={isSubmitting}
         />
       </View>
+      {isError && (
+        <View style={styles.requestError}>
+          <Text>{errorMessage}</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -71,5 +78,11 @@ const styles = StyleSheet.create({
   },
   navLink: {
     color: 'blue',
+  },
+  requestError: {
+    width: '100%',
+    marginTop: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

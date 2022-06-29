@@ -1,10 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import {TextInput, TouchableOpacity, StyleSheet, Text} from 'react-native';
 
 const CustomInput = ({
   passwordInput,
@@ -22,15 +17,12 @@ const CustomInput = ({
 
   return (
     <>
-      <TouchableOpacity
-        onPress={focusInput}
-        style={[styles.inputContainer, inputContainerStyle || {}]}>
-        <TextInput
-          {...inputProps}
-          secureTextEntry={hidePassword}
-          ref={inputRef}
-        />
-      </TouchableOpacity>
+      <TextInput
+        style={styles.inputContainer}
+        {...inputProps}
+        secureTextEntry={hidePassword}
+        ref={inputRef}
+      />
       {error ? <Text>{error}</Text> : null}
     </>
   );
@@ -38,6 +30,7 @@ const CustomInput = ({
 
 const styles = StyleSheet.create({
   inputContainer: {
+    height: 30,
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
   },
