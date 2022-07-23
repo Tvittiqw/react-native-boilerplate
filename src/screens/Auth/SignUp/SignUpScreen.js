@@ -13,6 +13,8 @@ import signupValidationSchema from '../../../validators/signupValidationSchema';
 import {useTypedDispatch} from '../../../hooks/storeHooks/typedStoreHooks';
 import {signUpRequest} from '../../../redux/auth/authSlice';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import AnimatedLoader from 'react-native-animated-loader';
 
 const SignUpScreen = ({navigation}) => {
   const [activeStep, setActiveStep] = useState('first');
@@ -21,6 +23,10 @@ const SignUpScreen = ({navigation}) => {
     useState(false);
   const [validateSecondStepOnChange, setValidateSecondStepOnChange] =
     useState(false);
+  const {isLoading, isSignupError, signupError} = useSelector(
+    state => state.auth,
+  );
+
   const dispatch = useTypedDispatch();
 
   const {t} = useTranslation();
@@ -30,7 +36,6 @@ const SignUpScreen = ({navigation}) => {
       action.setSubmitting(true);
       await dispatch(signUpRequest(formValues));
       action.setSubmitting(false);
-      navigation.push('BottomTab');
     } else {
       setActiveStep('second');
       action.setTouched({});
@@ -73,7 +78,17 @@ const SignUpScreen = ({navigation}) => {
               validateFirstStepOnChange={validateFirstStepOnChange}
               setValidateSecondStepOnChange={setValidateSecondStepOnChange}
               validateSecondStepOnChange={validateSecondStepOnChange}
+              isError={isSignupError}
+              errorMessage={signupError}
             />
+            <AnimatedLoader
+              visible={isLoading}
+              overlayColor="rgba(255,255,255,0.75)"
+              source={require('../../../config/loader.json')}
+              animationStyle={styles.lottie}
+              speed={1}>
+              <Text>Registering...</Text>
+            </AnimatedLoader>
 
             {activeStep === 'first' && (
               <View style={styles.loginContainer}>

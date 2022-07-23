@@ -16,6 +16,8 @@ const SignUpForm = ({
   setValidateSecondStepOnChange,
   validateSecondStepOnChange,
   setActiveStep,
+  isError,
+  errorMessage,
 }) => {
   const {values, errors, handleSubmit, isSubmitting, handleChange} = useFormik({
     initialValues,
@@ -59,9 +61,6 @@ const SignUpForm = ({
   };
 
   const {t} = useTranslation();
-  console.log(validateFirstStepOnChange, validateSecondStepOnChange);
-  console.log('errors', errors);
-  console.log('values', values);
 
   return (
     <View style={styles.signupForm}>
@@ -104,6 +103,11 @@ const SignUpForm = ({
               </View>
             );
           })}
+          {isError && (
+            <View style={styles.requestError}>
+              <Text>{errorMessage}</Text>
+            </View>
+          )}
         </View>
       )}
       <View style={{marginTop: 50}}>

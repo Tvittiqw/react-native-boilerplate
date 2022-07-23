@@ -5,6 +5,10 @@ export const signUp = body => {
   return apiClient.post('v1/auth/register', body);
 };
 
+export const googleAuthRequest = () => {
+  return apiClient.get('v1/auth/google');
+};
+
 export const login = body => {
   return apiClient.post('v1/auth/login', body);
 };
