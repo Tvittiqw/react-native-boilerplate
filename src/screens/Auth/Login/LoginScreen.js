@@ -6,23 +6,28 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import {LoginForm} from '../../../components/auth';
 import styles from './styles';
 import loginValidationSchema from '../../../validators/loginValidationSchema';
 import {useTypedDispatch} from '../../../hooks/storeHooks/typedStoreHooks';
-import {loginRequest} from '../../../redux/auth/authSlice';
+import {loginRequest, googleAuth} from '../../../redux/auth/authSlice';
 import {useIsFocused} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import AnimatedLoader from 'react-native-animated-loader';
+import {socialAthUrls} from '../../../config/config';
+
+import SafariView from 'react-native-safari-view';
+import {WebView} from 'react-native-webview';
 
 const LoginScreen = ({navigation}) => {
   const [validateOnChange, setValidateOnChange] = useState(false);
-
-  const isLoading = useSelector(state => state.auth.isLoading);
-  const isError = useSelector(state => state.auth.isError);
-  const errorMessage = useSelector(state => state.auth.error);
+  const [uri, setURL] = useState('');
+  const {isLoading, isLoginError, loginError} = useSelector(
+    state => state.auth,
+  );
 
   const dispatch = useTypedDispatch();
 
@@ -42,6 +47,68 @@ const LoginScreen = ({navigation}) => {
     }
   }, [focused]);
 
+  useEffect(() => {
+    const subscription = Linking.addEventListener('url', url =>
+      handleOpenURL(url.url),
+    );
+
+    return () => {
+      subscription.remove('url', handleOpenURL);
+    };
+  }, []);
+
+  const signIn = async () => {
+    try {
+      //todo move url to config
+      openUrl(socialAthUrls.google);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const handleOpenURL = url => {
+    const data = decodeURI(url);
+    const arr = data.split('user=');
+    const query = arr[1];
+    const parsedQuery = JSON.parse(query);
+    setURL('');
+    dispatch(googleAuth(parsedQuery));
+    if (Platform.OS === 'ios') {
+      SafariView.dismiss();
+    } else {
+      setURL('');
+    }
+  };
+
+  const openUrl = url => {
+    if (Platform.OS === 'ios') {
+      SafariView.show({
+        url,
+        fromBottom: true,
+      });
+    } else {
+      setURL(url);
+    }
+  };
+
+  if (uri) {
+    return (
+      <SafeAreaView style={{flex: 1}}>
+        <WebView
+          userAgent={
+            Platform.OS === 'android'
+              ? 'Chrome/18.0.1025.133 Mobile Safari/535.19'
+              : 'AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75'
+          }
+          source={{uri}}
+          onError={e => {
+            console.log(e.nativeEvent.url);
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
@@ -58,8 +125,8 @@ const LoginScreen = ({navigation}) => {
             validateOnChange={validateOnChange}
             setValidateOnChange={setValidateOnChange}
             navigateToForgotScreen={() => navigation.navigate('ForgotPassword')}
-            isError={isError}
-            errorMessage={errorMessage}
+            isError={isLoginError}
+            errorMessage={loginError}
           />
           <AnimatedLoader
             visible={isLoading}
@@ -75,7 +142,9 @@ const LoginScreen = ({navigation}) => {
           </View>
 
           <View style={styles.socialContainer}>
-            <TouchableOpacity style={styles.socialButton}>
+            <TouchableOpacity
+              style={styles.socialButton}
+              onPress={() => signIn()}>
               <Text style={[styles.navLink, {fontSize: 22}]}>Google</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.socialButton}>

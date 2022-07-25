@@ -1,5 +1,10 @@
 export const api = {
-  // host: 'localhost',
-  host: '192.168.1.2',
+  host: '192.168.1.5',
   port: '3000',
+  // host: 'toomobile.herokuapp.com',
+  // port: '',
+};
+
+export const socialAthUrls = {
+  google: 'https://toomobile.herokuapp.com/v1/auth/google',
 };

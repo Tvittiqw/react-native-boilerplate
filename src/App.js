@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import {LogBox} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
 import store from './redux/store';
 import StackNavigator from './navigation/StackNavigator';
 import {SplashScreen} from './screens';
 import {useTranslation} from 'react-i18next';
+import linking from './services/linking';
 
 const App = () => {
   const [isInitApp, setInitApp] = useState(false);
@@ -53,6 +55,9 @@ const App = () => {
     initAppSettings();
   }, []);
 
+  //ignore ViewPropTypes yellow box
+  LogBox.ignoreLogs(['ViewPropTypes']);
+
   useEffect(() => {
     if (isSettingsSetup && splashAnimationFinish) {
       setInitApp(true);
@@ -60,7 +65,7 @@ const App = () => {
   }, [isSettingsSetup, splashAnimationFinish]);
 
   return (
-    <Provider store={store}>
+    <Provider store={store} linking={linking}>
       <StackNavigator dynamicThemeStatus={isDynamicTheme} />
     </Provider>
   );
