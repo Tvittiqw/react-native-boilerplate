@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import {atLeastOneNumber} from '../consants/regex';
+import {atLeastOneNumber} from '../constants/regex';
 
 export const commonValues = {
   firstName: Yup.string()

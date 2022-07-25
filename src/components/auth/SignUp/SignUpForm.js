@@ -3,7 +3,7 @@ import {useFormik} from 'formik';
 import {View, Text, Image} from 'react-native';
 import {CustomButton, CustomInput} from '../../common';
 import {useTranslation} from 'react-i18next';
-import {credentialFields, personalData} from '../../../consants/registerFields';
+import {credentialFields, personalData} from '../../../constants/registerFields';
 import styles from './styles';
 
 const SignUpForm = ({

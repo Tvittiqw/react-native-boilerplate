@@ -51,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     initAppSettings();
-  });
+  }, []);
 
   useEffect(() => {
     if (isSettingsSetup && splashAnimationFinish) {

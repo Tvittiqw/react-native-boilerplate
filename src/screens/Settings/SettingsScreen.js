@@ -11,7 +11,7 @@ import {useTranslation} from 'react-i18next';
 import styles from './styles';
 import {DynamicTheme} from '../../navigation/StackNavigator';
 import RNPickerSelect from 'react-native-picker-select';
-import appLanguagesList from '../../consants/languages';
+import appLanguagesList from '../../constants/languages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/auth/authSlice';

@@ -764,6 +764,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@egjs/hammerjs@^2.0.17":
+  version "2.0.17"
+  resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
+  integrity sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==
+  dependencies:
+    "@types/hammerjs" "^2.0.36"
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"
@@ -1344,6 +1351,11 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stream-io/flat-list-mvcp@^0.10.2":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@stream-io/flat-list-mvcp/-/flat-list-mvcp-0.10.2.tgz#e247206c5c6409bb4af120e0f02d7b9b505f6e53"
+  integrity sha512-jebEKP7pfRF8/tVSqNM6qdvisfOtMnMlzGYTWldoOnIq9/6DS1BU4ilzBuH6O7iBUu4bDokrMCNJgA2b2EKW/A==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -1393,6 +1405,11 @@
   integrity sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==
   dependencies:
     "@types/node" "*"
+
+"@types/hammerjs@^2.0.36":
+  version "2.0.41"
+  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.41.tgz#f6ecf57d1b12d2befcce00e928a6a097c22980aa"
+  integrity sha512-ewXv/ceBaJprikMcxCmWU1FKyMAQ2X7a9Gtmzw8fcg2kIePI1crERDM818W+XYrxqdBBOdlf2rm137bU+BltCA==
 
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
@@ -5815,6 +5832,11 @@ react-native-background-timer@^2.4.1:
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.4.1.tgz#a3bc1cafa8c1e3aeefd0611de120298b67978a0f"
   integrity sha512-TE4Kiy7jUyv+hugxDxitzu38sW1NqjCk4uE5IgU2WevLv7sZacaBc6PZKOShNRPGirLl1NWkaG3LDEkdb9Um5g==
 
+react-native-bidirectional-infinite-scroll@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-bidirectional-infinite-scroll/-/react-native-bidirectional-infinite-scroll-0.3.3.tgz#31e83e30514be2eaaa889b97d01149c8a08576ec"
+  integrity sha512-zxYJDjrxTkGqg83WH3fSdufg79XZ7xDDn9HdHlKo9avAcz92Rf28/ivDeUM2aOUmmboqJK8BqtVByT6cF/taYg==
+
 react-native-codegen@*:
   version "0.0.14"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.14.tgz#1c8a9d39935e611a22765aefb06c2d81b2341672"
@@ -5834,6 +5856,17 @@ react-native-codegen@^0.0.13:
     flow-parser "^0.121.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
+
+react-native-gesture-handler@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.5.0.tgz#61385583570ed0a45a9ed142425e35f8fe8274fb"
+  integrity sha512-djZdcprFf08PZC332D+AeG5wcGeAPhzfCJtB3otUgOgTlvjVXmg/SLFdPJSpzLBqkRAmrC77tM79QgKbuLxkfw==
+  dependencies:
+    "@egjs/hammerjs" "^2.0.17"
+    hoist-non-react-statics "^3.3.0"
+    invariant "^2.2.4"
+    lodash "^4.17.21"
+    prop-types "^15.7.2"
 
 react-native-gradle-plugin@^0.0.5:
   version "0.0.5"
@@ -7304,6 +7337,11 @@ xcode@^3.0.0:
   dependencies:
     simple-plist "^1.1.0"
     uuid "^7.0.3"
+
+xdate@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/xdate/-/xdate-0.8.2.tgz#d7b033c00485d02695baf0044f4eacda3fc961a3"
+  integrity sha512-sNBlLfOC8S3V0vLDEUianQOXcTsc9j4lfeKU/klHe0RjHAYn0CXsSttumTot8dzalboV8gZbH38B+WcCIBjhFQ==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"

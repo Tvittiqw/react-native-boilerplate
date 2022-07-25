@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   userInfo: null,
-  isAuth: false,
+  isAuth: true,
   isLoading: false,
   isError: false,
   error: '',
