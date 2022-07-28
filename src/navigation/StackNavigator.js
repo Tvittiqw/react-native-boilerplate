@@ -96,7 +96,7 @@ const StackNavigator = ({dynamicThemeStatus}) => {
               <Stack.Screen
                 name={'ScheduleScreen'}
                 component={ScheduleScreen}
-                options={{headerShown: false}}
+                options={{headerShown: false, gestureEnabled: false}}
               />
             </>
           ) : (

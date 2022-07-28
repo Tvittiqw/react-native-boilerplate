@@ -1,19 +1,11 @@
 import React, {useMemo, useState} from 'react'
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native'
+import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 import moment from 'moment'
 import {useTranslation} from 'react-i18next';
-import WeekCalendar from '../../components/CustomCalendar/WeekCalendar'
-import {TimeSchedule} from "../../components/common";
+import {SwipeableTimeSchedule} from "../../components/common";
 import SwipeableWeekCalendar from "../../components/CustomCalendar/WeekCalendar/SwipeableWeekCalendar";
-
-const mockEvents = [
-    { description: 'Breakfast', dateStart: '2022-07-18', dateEnd: '2022-07-18', timeStart: '08:30', timeEnd: '08:50' },
-    { description: 'Call a doctor', dateStart: '2022-07-18', dateEnd: '2022-07-18', timeStart: '10:00', timeEnd: '10:20' },
-    { description: 'Work', dateStart: '2022-07-18', dateEnd: '2022-07-18', timeStart: '10:30', timeEnd: '13:20' },
-    { description: 'Dinner', dateStart: '2022-07-18', dateEnd: '2022-07-18', timeStart: '13:20', timeEnd: '14:10' },
-    { description: 'Call all clients', dateStart: '2022-07-18', dateEnd: '2022-07-18', timeStart: '14:15', timeEnd: '17:30' },
-    { description: 'Watch serial', dateStart: '2022-07-18', dateEnd: '2022-07-18', timeStart: '19:00', timeEnd: '21:30' },
-]
+import {COLORS} from "../../constants/global";
+import {calendarFormattedDate} from "../../utils/dateUtils";
 
 const styles = StyleSheet.create({
     headerContainer: {
@@ -28,15 +20,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 5,
         marginBottom: 5,
+    },
+    goBackText: {
+        color: COLORS.BLUE,
     }
 })
 
 const Header = (props) => {
     return (
         <View style={styles.headerContainer}>
-            <View style={styles.headerTopRow}>
-                <Text>{props.text}</Text>
-            </View>
+            <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={props.onGoBackHandle}
+                style={styles.headerTopRow}>
+                <Text style={styles.goBackText}>{props.text}</Text>
+            </TouchableOpacity>
             {props.children}
         </View>
     )
@@ -49,22 +47,41 @@ const ScheduleScreen = ({ navigation, route }) => {
     const {i18n} = useTranslation()
 
     const headerMonthText = useMemo(() => {
-        return moment(selectedDay).format('MMMM')
+        return moment(selectedDay).format('MMMM,yy')
     }, [selectedDay, i18n.language])
+
+    const calendarSwipeHandle = (newCurrentWeekDate) => {
+        setSelectedDay(newCurrentWeekDate)
+    }
+
+    const scheduleSwipeLeftHandle = () => {
+        setSelectedDay((prev) => calendarFormattedDate(moment(prev).add(1, 'day')))
+    }
+
+    const scheduleSwipeRightHandle = () => {
+        setSelectedDay((prev) => calendarFormattedDate(moment(prev).add(-1, 'day')))
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-            <Header text={headerMonthText}>
+            <Header
+                text={headerMonthText}
+                onGoBackHandle={() => navigation.goBack()}
+            >
                     <SwipeableWeekCalendar
                         startWeekDate={selectedDay}
                         selectedDate={selectedDay}
                         onPressDay={(date) => setSelectedDay(date)}
-                        onSwipeLeft={() => {}}
-                        onSwipeRight={() => {}}
+                        onSwipeLeft={calendarSwipeHandle}
+                        onSwipeRight={calendarSwipeHandle}
                     />
             </Header>
             <View style={{ flex: 1, paddingLeft: 20 }}>
-                <TimeSchedule/>
+                <SwipeableTimeSchedule
+                    initialDate={selectedDay}
+                    onSwipeLeft={scheduleSwipeLeftHandle}
+                    onSwipeRight={scheduleSwipeRightHandle}
+                />
             </View>
         </SafeAreaView>
     )

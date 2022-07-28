@@ -142,3 +142,13 @@ export const getOffsetWeekDay = (date, offset = 0, isCalendarFormat = false) => 
     const day = moment(date).add(offset, 'week')
     return isCalendarFormat ? day.format(CALENDAR_DATE_FORMAT) : day
 }
+
+export const sameTimes = (a, b, date) => {
+    let time1 = moment(a)
+    let time2 = moment(b)
+    if (date) {
+        time1 = moment(`${date} ${a}`)
+        time2 = moment(`${date} ${b}`)
+    }
+    return moment(time1).isSame(time2)
+}

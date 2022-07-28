@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Dimensions, View, Animated, StyleSheet} from 'react-native'
-import { PanGestureHandler, State } from 'react-native-gesture-handler'
+import { PanGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler'
 import WeekCalendar from "./index";
-import {calendarFormattedDate, getOffsetWeekDay} from "../../../utils/dateUtils";
-import moment from 'moment'
+import {getOffsetWeekDay} from "../../../utils/dateUtils";
 import {WeekNamesComponent} from "../../common";
 
 const dimensionWidth = Dimensions.get('window').width
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     },
     element: {
         flex: 1,
-        width: '100%'
+        width: '100%',
     }
 })
 
@@ -32,20 +31,13 @@ const SwipeableWeekCalendar = (props) => {
     } = props
 
     let oldTranslateX = 0
-    let mainIndex = 0
-    const translateXArray = [
+    const translateXArray = useRef([
         new Animated.Value(0),
         new Animated.Value(dimensionWidth),
         new Animated.Value(-dimensionWidth)
-    ]
+    ]).current
 
-    const recordTranslateXArray = [0, dimensionWidth, -dimensionWidth]
-
-    const [selectedDay, setSelectedDay] = useState(selectedDate || null)
-
-    useEffect(() => {
-        setSelectedDay(selectedDate)
-    }, [selectedDate])
+    const recordTranslateXArray = useRef([0, dimensionWidth, -dimensionWidth]).current
 
     const [weeksArray, setWeeksArray] = useState(() => [
         startWeekDate,
@@ -53,7 +45,41 @@ const SwipeableWeekCalendar = (props) => {
         getOffsetWeekDay(startWeekDate, -1, true),
     ])
 
-    console.log('----weeks', weeksArray)
+    const [mainIndex, setMainIndex] = useState(0)
+
+    const [selectedDay, setSelectedDay] = useState(selectedDate || null)
+
+    useEffect(() => {
+        setSelectedDay(selectedDate)
+        if (!weeksArray.find((el) => el === selectedDate)) {
+            switch (mainIndex) {
+                case 0: {
+                    setWeeksArray([
+                        selectedDate,
+                        getOffsetWeekDay(selectedDate, 1, true),
+                        getOffsetWeekDay(selectedDate, -1, true),
+                    ])
+                    break
+                }
+                case 1: {
+                    setWeeksArray([
+                        getOffsetWeekDay(selectedDate, -1, true),
+                        selectedDate,
+                        getOffsetWeekDay(selectedDate, 1, true),
+                    ])
+                    break
+                }
+                case 2: {
+                    setWeeksArray([
+                        getOffsetWeekDay(selectedDate, 1, true),
+                        getOffsetWeekDay(selectedDate, -1, true),
+                        selectedDate,
+                    ])
+                    break
+                }
+            }
+        }
+    }, [selectedDate, weeksArray, mainIndex])
 
     const pressDayHandle = (date) => {
         setSelectedDay(date)
@@ -64,17 +90,21 @@ const SwipeableWeekCalendar = (props) => {
         let newWeeksArr = [...weeksArray]
 
         if (direction === 'right') {
-            // if (index === 0) {
-            //     newWeeksArr[2] = getOffsetWeekDay(newWeeksArr[index], -1, true)
-            // } else {
-            //     newWeeksArr[(index - 1) % 3] = getOffsetWeekDay(newWeeksArr[index], -1, true)
-            // }
+            if (index === 0) {
+                newWeeksArr[1] = getOffsetWeekDay(newWeeksArr[2], -1, true)
+            } else {
+                newWeeksArr[(index + 1) % 3] = getOffsetWeekDay(weeksArray[(index - 1) % 3], -1 , true)
+            }
+            setWeeksArray([...newWeeksArr])
         }
 
         if (direction === 'left') {
-            // newWeeksArr[(index + 1) % 3] = getOffsetWeekDay(newWeeksArr[index + 1], 1, true)
-            // newWeeksArr[2] = getOffsetWeekDay(weeksArray[1], 1, true)
-            // setTimeout(() => setWeeksArray([...newWeeksArr]), 500)
+            if (index === 0) {
+                newWeeksArr[2] = getOffsetWeekDay(newWeeksArr[1], 1, true)
+            } else {
+                newWeeksArr[(index - 1) % 3] = getOffsetWeekDay(weeksArray[(index + 1) % 3], 1, true)
+            }
+            setWeeksArray([...newWeeksArr])
         }
     }
 
@@ -137,8 +167,8 @@ const SwipeableWeekCalendar = (props) => {
             ).start()
 
             swipeHandle('left', mainIndex)
-
-            mainIndex = (index + 1) % 3
+            onSwipeLeft && onSwipeLeft(weeksArray[(index + 1) % 3])
+            setMainIndex((index + 1) % 3)
         }
         // this is when we swipe to the right.
         else if (recordTranslateXArray[index] > 100) {
@@ -173,8 +203,8 @@ const SwipeableWeekCalendar = (props) => {
             ).start()
 
             swipeHandle('right', mainIndex)
-
-            mainIndex = (index - 1) % 3
+            onSwipeRight && onSwipeRight(weeksArray[(index - 1) % 3])
+            setMainIndex((index - 1) % 3)
         }
     }
 
@@ -204,7 +234,7 @@ const SwipeableWeekCalendar = (props) => {
     }
 
     return (
-        <View>
+        <GestureHandlerRootView>
             <WeekNamesComponent containerStyle={{ paddingBottom: 0 }}/>
             <View style={styles.swipeContainer}>
                 <PanGestureHandler
@@ -236,6 +266,8 @@ const SwipeableWeekCalendar = (props) => {
                             {
                                 transform: [{ translateX: translateXArray[1] }],
                                 position: "absolute",
+                                top: 0,
+                                bottom: 0,
                             },
                         ]}
                     >
@@ -258,6 +290,8 @@ const SwipeableWeekCalendar = (props) => {
                             {
                                 transform: [{ translateX: translateXArray[2] }],
                                 position: "absolute",
+                                top: 0,
+                                bottom: 0,
                             },
                         ]}
                     >
@@ -270,7 +304,7 @@ const SwipeableWeekCalendar = (props) => {
                     </Animated.View>
                 </PanGestureHandler>
             </View>
-        </View>
+        </GestureHandlerRootView>
     )
 }
 
