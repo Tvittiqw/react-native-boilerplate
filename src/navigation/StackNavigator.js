@@ -17,6 +17,7 @@ import AsyncStorage, {
   useAsyncStorage,
 } from '@react-native-async-storage/async-storage';
 import BottomTabNavigator from './BottomTabNavigator';
+import ScheduleScreen from "../screens/Schedule/ScheduleScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +92,11 @@ const StackNavigator = ({dynamicThemeStatus}) => {
                 name={'BottomTab'}
                 component={BottomTabNavigator}
                 options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name={'ScheduleScreen'}
+                component={ScheduleScreen}
+                options={{headerShown: false, gestureEnabled: false}}
               />
             </>
           ) : (

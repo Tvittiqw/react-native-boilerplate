@@ -10,7 +10,7 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name={'Calendar'}
         component={CalendarScreen}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
       <Tab.Screen
         name={'Search'}

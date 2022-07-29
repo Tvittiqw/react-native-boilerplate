@@ -3,10 +3,12 @@ import {LogBox} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
 import store from './redux/store';
+import moment from 'moment'
 import StackNavigator from './navigation/StackNavigator';
 import {SplashScreen} from './screens';
 import {useTranslation} from 'react-i18next';
 import linking from './services/linking';
+import 'moment/locale/ru'
 
 const App = () => {
   const [isInitApp, setInitApp] = useState(false);
@@ -54,6 +56,10 @@ const App = () => {
   useEffect(() => {
     initAppSettings();
   }, []);
+
+  useEffect(() => {
+    moment.locale(i18n.language)
+  }, [i18n.language])
 
   //ignore ViewPropTypes yellow box
   LogBox.ignoreLogs(['ViewPropTypes']);

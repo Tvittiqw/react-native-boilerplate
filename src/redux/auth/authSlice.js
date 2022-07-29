@@ -5,7 +5,7 @@ import {errorHandler} from '../../utils/helpers';
 
 const initialState = {
   userInfo: null,
-  isAuth: false,
+  isAuth: true,
   isLoading: false,
   isLoginError: false,
   isSignupError: false,

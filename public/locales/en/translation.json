@@ -6,14 +6,15 @@
     "username_placeholder": "Username"
   },
   "settings": {
-    "title": "Settings Screen",
+    "title": "Settings",
     "dynamic_theme": "Dynamic theme",
     "change_lang": "Change language",
     "logout_text": "Logout",
     "about_link": "About an app"
   },
   "calendar": {
-    "title": "Calendar Screen"
+    "title": "Calendar",
+    "shortWeekDays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   },
   "search": {
     "title": "Search Screen"
