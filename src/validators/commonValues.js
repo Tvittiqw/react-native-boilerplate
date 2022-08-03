@@ -16,6 +16,10 @@ export const commonValues = {
   email: Yup.string()
     .required('Email is required!')
     .email('Invalid email address'),
+  // todo add domain validation
+  // .test('test-name', 'Validation failure message', function (value) {
+  //   // your logic to check the domain
+  // }),
   password: Yup.string()
     .required('Password is required!')
     .min(8, 'At least 8 characters')

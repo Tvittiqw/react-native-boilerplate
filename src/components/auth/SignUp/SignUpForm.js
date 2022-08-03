@@ -3,7 +3,10 @@ import {useFormik} from 'formik';
 import {View, Text, Image} from 'react-native';
 import {CustomButton, CustomInput} from '../../common';
 import {useTranslation} from 'react-i18next';
-import {credentialFields, personalData} from '../../../constants/registerFields';
+import {
+  credentialFields,
+  personalData,
+} from '../../../constants/registerFields';
 import styles from './styles';
 
 const SignUpForm = ({
@@ -75,6 +78,7 @@ const SignUpForm = ({
                   onChangeText={handleChange(item.name)}
                   placeholder={t(item.placeholder)}
                   passwordInput={item.isPassword}
+                  keyboardType={item.type}
                   error={
                     errors[item.name] && validateFirstStepOnChange
                       ? errors[item.name]

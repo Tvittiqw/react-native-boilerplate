@@ -3,12 +3,12 @@ import {LogBox} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
 import store from './redux/store';
-import moment from 'moment'
+import moment from 'moment';
 import StackNavigator from './navigation/StackNavigator';
 import {SplashScreen} from './screens';
 import {useTranslation} from 'react-i18next';
 import linking from './services/linking';
-import 'moment/locale/ru'
+import 'moment/locale/ru';
 
 const App = () => {
   const [isInitApp, setInitApp] = useState(false);
@@ -28,6 +28,7 @@ const App = () => {
 
   const setupThemeSettings = async () => {
     const dynamicThemeStatus = await AsyncStorage.getItem('@isDynamicTheme');
+    JSON.parse(dynamicThemeStatus);
     if (dynamicThemeStatus) {
       setDynamicTheme(dynamicThemeStatus.status);
     } else {
@@ -58,8 +59,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    moment.locale(i18n.language)
-  }, [i18n.language])
+    moment.locale(i18n.language);
+  }, [i18n.language]);
 
   //ignore ViewPropTypes yellow box
   LogBox.ignoreLogs(['ViewPropTypes']);

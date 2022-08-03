@@ -35,7 +35,6 @@ const SignUpScreen = ({navigation}) => {
     if (activeStep === 'second') {
       action.setSubmitting(true);
       await dispatch(signUpRequest(formValues));
-      action.setSubmitting(false);
     } else {
       setActiveStep('second');
       action.setTouched({});

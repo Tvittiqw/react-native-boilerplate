@@ -3,6 +3,7 @@ const credentialFields = [
     name: 'email',
     placeholder: 'common.email_placeholder',
     id: 1,
+    type: 'email-address',
   },
   {
     name: 'password',

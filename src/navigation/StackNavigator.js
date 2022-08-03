@@ -17,7 +17,7 @@ import AsyncStorage, {
   useAsyncStorage,
 } from '@react-native-async-storage/async-storage';
 import BottomTabNavigator from './BottomTabNavigator';
-import ScheduleScreen from "../screens/Schedule/ScheduleScreen";
+import ScheduleScreen from '../screens/Schedule/ScheduleScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -60,9 +60,12 @@ const StackNavigator = ({dynamicThemeStatus}) => {
   }, []);
 
   const saveInStorageThemeConfig = useCallback(async () => {
-    await AsyncStorage.setItem('@isDynamicTheme', {
-      status: isDynamicallyThemeChange,
-    });
+    await AsyncStorage.setItem(
+      '@isDynamicTheme',
+      JSON.stringify({
+        status: isDynamicallyThemeChange,
+      }),
+    );
   }, [isDynamicallyThemeChange]);
 
   useEffect(() => {
