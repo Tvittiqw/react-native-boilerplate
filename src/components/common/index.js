@@ -3,7 +3,8 @@ import CustomButton from './Buttons/CustomButton';
 import Header from './Header/Header';
 import WeekNamesComponent from './WeekNames';
 import TimeSchedule from './Schedule';
-import SwipeableTimeSchedule from './Schedule/SwipeableTimeSchedule'
+import SwipeableTimeSchedule from './Schedule/SwipeableTimeSchedule';
+import SwipeGestureContainer from './SwipeGestureContainer';
 
 export {
     CustomInput,
@@ -12,4 +13,5 @@ export {
     WeekNamesComponent,
     TimeSchedule,
     SwipeableTimeSchedule,
+    SwipeGestureContainer,
 }

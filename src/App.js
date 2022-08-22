@@ -9,13 +9,14 @@ import {SplashScreen} from './screens';
 import {useTranslation} from 'react-i18next';
 import linking from './services/linking';
 import 'moment/locale/ru';
+import ThemeProvider from "./context/theme/ThemeProvider";
 
 const App = () => {
   const [isInitApp, setInitApp] = useState(false);
 
   const [isSettingsSetup, setSettingsSetup] = useState(false);
   const [splashAnimationFinish, setSplashAnimationFinish] = useState(false);
-  const [isDynamicTheme, setDynamicTheme] = useState(null);
+  const [dynamicThemeStatus, setDynamicThemeStatus] = useState(false);
 
   const {i18n} = useTranslation();
 
@@ -27,12 +28,12 @@ const App = () => {
   };
 
   const setupThemeSettings = async () => {
-    const dynamicThemeStatus = await AsyncStorage.getItem('@isDynamicTheme');
-    JSON.parse(dynamicThemeStatus);
-    if (dynamicThemeStatus) {
-      setDynamicTheme(dynamicThemeStatus.status);
+    const status = await AsyncStorage.getItem('@isDynamicTheme');
+    JSON.parse(status);
+    if (status !== null || status !== 'null') {
+      setDynamicThemeStatus(!!status)
     } else {
-      setDynamicTheme(true);
+      setDynamicThemeStatus(false);
     }
   };
 
@@ -73,7 +74,9 @@ const App = () => {
 
   return (
     <Provider store={store} linking={linking}>
-      <StackNavigator dynamicThemeStatus={isDynamicTheme} />
+      <ThemeProvider themeStatusFromSettings={dynamicThemeStatus}>
+        <StackNavigator/>
+      </ThemeProvider>
     </Provider>
   );
 };

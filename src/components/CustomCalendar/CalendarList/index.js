@@ -43,7 +43,7 @@ const CalendarList = (props) => {
             rows.push(date.clone().add(i, 'month'))
         }
         return [rows, todayIndex]
-    }, [pastScrollRange, futureScrollRange, date])
+    }, [pastScrollRange, futureScrollRange])
 
     const renderItem = useCallback(({ item }) => {
         return (
@@ -51,7 +51,9 @@ const CalendarList = (props) => {
                 <CalendarListItem
                     item={item}
                     calendarHeight={calendarHeight}
-                    onPressDay={onSelectedDay}
+                    onPressDay={(day) => {
+                        onSelectedDay && onSelectedDay(day)
+                    }}
                 />
             </View>
         )
@@ -69,7 +71,7 @@ const CalendarList = (props) => {
         <View style={styles.flatListContainer}>
             <FlatList
                 ref={listRef}
-                // initialListSize={pastScrollRange + futureScrollRange + 1}
+                initialListSize={pastScrollRange + futureScrollRange + 1}
                 data={calendarsData}
                 renderItem={renderItem}
                 initialScrollIndex={todayIndex}
