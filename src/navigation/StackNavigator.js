@@ -1,4 +1,4 @@
-import React, {createContext, useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {Appearance} from 'react-native';
 import {
@@ -13,22 +13,16 @@ import {
   ResetPasswordScreen,
   SignUpScreen,
 } from '../screens';
-import AsyncStorage, {
-  useAsyncStorage,
-} from '@react-native-async-storage/async-storage';
 import BottomTabNavigator from './BottomTabNavigator';
 import ScheduleScreen from '../screens/Schedule/ScheduleScreen';
+import {useThemeContext} from "../context/theme/ThemeProvider";
 
 const Stack = createNativeStackNavigator();
 
-export const DynamicTheme = createContext({});
-
-const StackNavigator = ({dynamicThemeStatus}) => {
-  const [isDynamicallyThemeChange, setDynamicallyThemeChange] =
-    useState(dynamicThemeStatus);
-  const [isChangeThemeByToggle, setChangeThemeByToggle] = useState(false);
+const StackNavigator = () => {
   const [appTheme, setAppTheme] = useState();
   const [token, setToken] = useState();
+  const {isDynamicTheme} = useThemeContext()
 
   const {isAuth} = useSelector(state => state.auth);
 
@@ -47,45 +41,21 @@ const StackNavigator = ({dynamicThemeStatus}) => {
   //   getToken();
   // }, []);
 
-  const themeContextValue = {
-    isDynamic: isDynamicallyThemeChange,
-    changeDynamicStatus: () => {
-      setDynamicallyThemeChange(prevState => !prevState);
-      setChangeThemeByToggle(true);
-    },
-  };
-
-  const themeChangeListener = useCallback(() => {
-    setAppTheme(Appearance.getColorScheme());
+  const themeChangeListener = useCallback(({colorScheme}) => {
+    setAppTheme(colorScheme);
   }, []);
 
-  const saveInStorageThemeConfig = useCallback(async () => {
-    await AsyncStorage.setItem(
-      '@isDynamicTheme',
-      JSON.stringify({
-        status: isDynamicallyThemeChange,
-      }),
-    );
-  }, [isDynamicallyThemeChange]);
-
   useEffect(() => {
-    if (isChangeThemeByToggle) {
-      saveInStorageThemeConfig();
-    }
-  }, [isChangeThemeByToggle, saveInStorageThemeConfig]);
-
-  useEffect(() => {
-    if (isDynamicallyThemeChange) {
+    if (isDynamicTheme) {
       setAppTheme(Appearance.getColorScheme());
       const unsubscribe = Appearance.addChangeListener(themeChangeListener);
       return () => unsubscribe.remove();
     } else {
       setAppTheme('light');
     }
-  }, [themeChangeListener, isDynamicallyThemeChange]);
+  }, [isDynamicTheme]);
 
   return (
-    <DynamicTheme.Provider value={themeContextValue}>
       <NavigationContainer
         theme={appTheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator>
@@ -131,7 +101,6 @@ const StackNavigator = ({dynamicThemeStatus}) => {
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
-    </DynamicTheme.Provider>
   );
 };
 

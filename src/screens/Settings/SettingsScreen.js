@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import styles from './styles';
-import {DynamicTheme} from '../../navigation/StackNavigator';
 import RNPickerSelect from 'react-native-picker-select';
 import appLanguagesList from '../../constants/languages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/auth/authSlice';
+import {useThemeContext} from "../../context/theme/ThemeProvider";
 
 const SettingsScreen = ({navigation}) => {
   const {t, i18n} = useTranslation();
@@ -27,7 +27,7 @@ const SettingsScreen = ({navigation}) => {
 
   const [isSelected, setSelected] = useState(false);
 
-  const {isDynamic, changeDynamicStatus} = useContext(DynamicTheme);
+  const {isDynamicTheme, changeThemeStatus} = useThemeContext();
 
   const setupLanguageHandler = useCallback(async () => {
     if (selectedLanguage?.value) {
@@ -59,7 +59,7 @@ const SettingsScreen = ({navigation}) => {
         <View style={styles.themeContainer}>
           <Text>{t('settings.dynamic_theme')}</Text>
 
-          <Switch value={isDynamic} onChange={changeDynamicStatus} />
+          <Switch value={isDynamicTheme} onChange={changeThemeStatus} />
         </View>
 
         {Platform.OS === 'ios' ? (
