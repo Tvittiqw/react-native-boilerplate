@@ -7,11 +7,11 @@ import SwipeableTimeSchedule from './Schedule/SwipeableTimeSchedule';
 import SwipeGestureContainer from './SwipeGestureContainer';
 
 export {
-    CustomInput,
-    CustomButton,
-    Header,
-    WeekNamesComponent,
-    TimeSchedule,
-    SwipeableTimeSchedule,
-    SwipeGestureContainer,
-}
+  CustomInput,
+  CustomButton,
+  Header,
+  WeekNamesComponent,
+  TimeSchedule,
+  SwipeableTimeSchedule,
+  SwipeGestureContainer,
+};

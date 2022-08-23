@@ -16,4 +16,5 @@ export {
   ForgotPasswordScreen,
   ResetPasswordScreen,
   SplashScreen,
+  ScheduleScreen,
 };

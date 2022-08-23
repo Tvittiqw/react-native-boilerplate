@@ -14,15 +14,14 @@ import {
   SignUpScreen,
 } from '../screens';
 import BottomTabNavigator from './BottomTabNavigator';
-import ScheduleScreen from '../screens/Schedule/ScheduleScreen';
-import {useThemeContext} from "../context/theme/ThemeProvider";
+import {useThemeContext} from '../context/theme/ThemeProvider';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   const [appTheme, setAppTheme] = useState();
   const [token, setToken] = useState();
-  const {isDynamicTheme} = useThemeContext()
+  const {isDynamicTheme} = useThemeContext();
 
   const {isAuth} = useSelector(state => state.auth);
 
@@ -56,51 +55,45 @@ const StackNavigator = () => {
   }, [isDynamicTheme]);
 
   return (
-      <NavigationContainer
-        theme={appTheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack.Navigator>
-          {isAuth ? (
-            <>
-              <Stack.Screen
-                name={'BottomTab'}
-                component={BottomTabNavigator}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name={'ScheduleScreen'}
-                component={ScheduleScreen}
-                options={{headerShown: false, gestureEnabled: false}}
-              />
-            </>
-          ) : (
-            <>
-              <Stack.Screen
-                name={'Login'}
-                component={LoginScreen}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name={'SignUp'}
-                component={SignUpScreen}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name={'ForgotPassword'}
-                component={ForgotPasswordScreen}
-                options={{headerShown: false}}
-              />
-            </>
-          )}
-
-          <Stack.Group navigationKey={isAuth ? 'user' : 'guest'}>
+    <NavigationContainer theme={appTheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Stack.Navigator>
+        {isAuth ? (
+          <>
             <Stack.Screen
-              name={'ResetPassword'}
-              component={ResetPasswordScreen}
+              name={'BottomTab'}
+              component={BottomTabNavigator}
               options={{headerShown: false}}
             />
-          </Stack.Group>
-        </Stack.Navigator>
-      </NavigationContainer>
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name={'Login'}
+              component={LoginScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={'SignUp'}
+              component={SignUpScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={'ForgotPassword'}
+              component={ForgotPasswordScreen}
+              options={{headerShown: false}}
+            />
+          </>
+        )}
+
+        <Stack.Group navigationKey={isAuth ? 'user' : 'guest'}>
+          <Stack.Screen
+            name={'ResetPassword'}
+            component={ResetPasswordScreen}
+            options={{headerShown: false}}
+          />
+        </Stack.Group>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
