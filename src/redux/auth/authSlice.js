@@ -11,6 +11,7 @@ const initialState = {
   isSignupError: false,
   loginError: '',
   signupError: '',
+  token: null,
 };
 
 export const loginRequest = createAsyncThunk(
