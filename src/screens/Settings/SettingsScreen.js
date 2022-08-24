@@ -1,12 +1,5 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {
-  Platform,
-  SafeAreaView,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Platform, SafeAreaView, Switch, Text, TouchableOpacity, View,} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import styles from './styles';
 import RNPickerSelect from 'react-native-picker-select';
@@ -18,7 +11,6 @@ import {useThemeContext} from "../../context/theme/ThemeProvider";
 
 const SettingsScreen = ({navigation}) => {
   const {t, i18n} = useTranslation();
-
   const dispatch = useDispatch();
 
   const [selectedLanguage, setSelectedLanguage] = useState(() =>
@@ -44,7 +36,7 @@ const SettingsScreen = ({navigation}) => {
   }, [isSelected, setupLanguageHandler]);
 
   const onLogoutPress = async () => {
-    dispatch(logout());
+    await dispatch(logout());
   };
 
   return (

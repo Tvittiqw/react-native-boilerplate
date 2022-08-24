@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {LogBox} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
-import store from './redux/store';
+import reduxSettings from './redux/store';
 import moment from 'moment';
 import StackNavigator from './navigation/StackNavigator';
 import {SplashScreen} from './screens';
@@ -10,6 +10,9 @@ import {useTranslation} from 'react-i18next';
 import linking from './services/linking';
 import 'moment/locale/ru';
 import ThemeProvider from "./context/theme/ThemeProvider";
+import { PersistGate } from 'redux-persist/integration/react'
+
+const {store, persistor} = reduxSettings
 
 const App = () => {
   const [isInitApp, setInitApp] = useState(false);
@@ -74,9 +77,11 @@ const App = () => {
 
   return (
     <Provider store={store} linking={linking}>
-      <ThemeProvider themeStatusFromSettings={dynamicThemeStatus}>
-        <StackNavigator/>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider themeStatusFromSettings={dynamicThemeStatus}>
+          <StackNavigator/>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 };

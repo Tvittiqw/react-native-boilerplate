@@ -5,12 +5,13 @@ import {errorHandler} from '../../utils/helpers';
 
 const initialState = {
   userInfo: null,
-  isAuth: true,
+  isAuth: false,
   isLoading: false,
   isLoginError: false,
   isSignupError: false,
   loginError: '',
   signupError: '',
+  token: null,
 };
 
 export const loginRequest = createAsyncThunk(
@@ -18,8 +19,7 @@ export const loginRequest = createAsyncThunk(
   async (loginFormData, thunkApi) => {
     try {
       const response = await login(loginFormData);
-      if (response) {
-        await AsyncStorage.setItem('@Token', response.data.tokens.access.token);
+      if (response && response.data) {
         return thunkApi.fulfillWithValue(response.data);
       }
     } catch (err) {
@@ -50,8 +50,8 @@ export const signUpRequest = createAsyncThunk(
   async (signupFormData, thunkApi) => {
     try {
       const response = await signUp(signupFormData);
-      if (response) {
-        await AsyncStorage.setItem('@Token', response.data.tokens.access.token);
+      if (response && response.data) {
+        // await AsyncStorage.setItem('@Token', response.data.tokens.access.token);
         return thunkApi.fulfillWithValue(response.data);
       }
     } catch (err) {
@@ -60,8 +60,10 @@ export const signUpRequest = createAsyncThunk(
   },
 );
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-  await AsyncStorage.removeItem('@Token');
+export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
+  // TODO
+  // Add request to server (with logout logic)
+  thunkApi.dispatch({type: 'logout'})
 });
 
 const authSlice = createSlice({
@@ -78,6 +80,7 @@ const authSlice = createSlice({
       state.userInfo = {
         user: payload.user,
       };
+      state.token = payload.tokens.access.token;
       state.isAuth = true;
       state.isLoading = false;
     },
@@ -95,6 +98,7 @@ const authSlice = createSlice({
       state.userInfo = {
         user: payload.user,
       };
+      state.token = payload.tokens.access.token;
       state.isAuth = true;
       state.isLoading = false;
     },
@@ -103,10 +107,12 @@ const authSlice = createSlice({
       state.isSignupError = true;
       state.signupError = payload.message;
     },
-    [logout.fulfilled.type]: state => {
-      state.isLoading = false;
-      state.isAuth = false;
+    [logout.pending.type]: (state) => {
+      state.isLoading = true;
     },
+    [logout.fulfilled.type]: (state) => {
+      state.isLoading = false;
+    }
   },
 });
 

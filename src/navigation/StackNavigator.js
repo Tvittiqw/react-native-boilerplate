@@ -20,25 +20,9 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   const [appTheme, setAppTheme] = useState();
-  const [token, setToken] = useState();
   const {isDynamicTheme} = useThemeContext();
 
   const {isAuth} = useSelector(state => state.auth);
-
-  //todo add token verification and not logout after app closed
-
-  // const getToken = async () => {
-  //   try {
-  //     const data = await AsyncStorage.getItem('@Token');
-  //     setToken(data);
-  //   } catch (e) {
-  //     console.log('error', e);
-  //   }
-  // };
-  //
-  // useEffect(() => {
-  //   getToken();
-  // }, []);
 
   const themeChangeListener = useCallback(({colorScheme}) => {
     setAppTheme(colorScheme);
