@@ -1,8 +1,8 @@
 import React from 'react';
 import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {SearchScreen, SettingsScreen} from '../screens';
-import CalendarStackNavigator from './CalendarStack';
+import {SearchScreen, SettingsScreen} from '../../screens';
+import CalendarStack from './CalendarStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -11,12 +11,12 @@ const BottomTabNavigator = () => {
     <Tab.Navigator>
       <Tab.Screen
         name={'CalendarStack'}
-        component={CalendarStackNavigator}
+        component={CalendarStack}
         options={{
           headerShown: false,
           tabBarIcon: () => (
             <Image
-              source={require('./../assets/icons/calendar.png')}
+              source={require('../../assets/icons/calendar.png')}
               style={{width: 20, height: 20}}
             />
           ),
@@ -29,7 +29,7 @@ const BottomTabNavigator = () => {
           headerShown: false,
           tabBarIcon: () => (
             <Image
-              source={require('./../assets/icons/search.png')}
+              source={require('../../assets/icons/search.png')}
               style={{width: 20, height: 20}}
             />
           ),
@@ -42,7 +42,7 @@ const BottomTabNavigator = () => {
           headerShown: false,
           tabBarIcon: () => (
             <Image
-              source={require('./../assets/icons/settings-sliders.png')}
+              source={require('../../assets/icons/settings-sliders.png')}
               style={{width: 20, height: 20}}
             />
           ),
