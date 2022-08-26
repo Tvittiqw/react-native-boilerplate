@@ -4,13 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
 import reduxSettings from './redux/store';
 import moment from 'moment';
-import StackNavigator from './navigation/StackNavigator';
 import {SplashScreen} from './screens';
 import {useTranslation} from 'react-i18next';
 import linking from './services/linking';
 import 'moment/locale/ru';
 import ThemeProvider from "./context/theme/ThemeProvider";
 import { PersistGate } from 'redux-persist/integration/react'
+import Navigator from './navigation/Navigator';
 
 const {store, persistor} = reduxSettings
 
@@ -22,13 +22,6 @@ const App = () => {
   const [dynamicThemeStatus, setDynamicThemeStatus] = useState(false);
 
   const {i18n} = useTranslation();
-
-  const checkAuth = async () => {
-    const token = await AsyncStorage.getItem('@token');
-    if (token) {
-    } else {
-    }
-  };
 
   const setupThemeSettings = async () => {
     const status = await AsyncStorage.getItem('@isDynamicTheme');
@@ -52,7 +45,6 @@ const App = () => {
   };
 
   const initAppSettings = async () => {
-    await checkAuth();
     await setupThemeSettings();
     await setupLanguageSettings();
     setSettingsSetup(true);
@@ -79,7 +71,7 @@ const App = () => {
     <Provider store={store} linking={linking}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider themeStatusFromSettings={dynamicThemeStatus}>
-          <StackNavigator/>
+          <Navigator/>
         </ThemeProvider>
       </PersistGate>
     </Provider>
