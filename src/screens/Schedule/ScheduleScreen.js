@@ -12,11 +12,12 @@ import {SwipeableTimeSchedule} from '../../components/common';
 import SwipeableWeekCalendar from '../../components/CustomCalendar/WeekCalendar/SwipeableWeekCalendar';
 import {COLORS} from '../../constants/global';
 import {calendarFormattedDate} from '../../utils/dateUtils';
+import Modal from 'react-native-modal';
 
 const styles = StyleSheet.create({
   headerContainer: {
     paddingHorizontal: 16,
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.25,
     borderBottomColor: 'gray',
     paddingBottom: 3,
   },
@@ -30,18 +31,36 @@ const styles = StyleSheet.create({
   goBackText: {
     color: COLORS.BLUE,
   },
+  modalContentWrapper: {
+    flex: 1,
+    backgroundColor: COLORS.GRAY,
+    marginBottom: 100,
+    marginTop: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 40,
+  }
 });
 
 const Header = props => {
+  const {
+    children,
+    rightTopElement = null,
+    leftTopElement = null,
+  } = props
   return (
     <View style={styles.headerContainer}>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={props.onGoBackHandle}
-        style={styles.headerTopRow}>
-        <Text style={styles.goBackText}>{props.text}</Text>
-      </TouchableOpacity>
-      {props.children}
+      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+        {leftTopElement ? leftTopElement : <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={props.onGoBackHandle}
+          style={styles.headerTopRow}
+        >
+          <Text style={styles.goBackText}>{props.text}</Text>
+        </TouchableOpacity>}
+        {rightTopElement}
+      </View>
+      {children}
     </View>
   );
 };
@@ -50,6 +69,8 @@ const ScheduleScreen = ({navigation, route}) => {
   const [selectedDay, setSelectedDay] = useState(
     route.params?.selectedDay || moment(),
   );
+
+  const [isModalVisible, setModalVisible] = useState(false)
 
   const {i18n} = useTranslation();
 
@@ -69,9 +90,20 @@ const ScheduleScreen = ({navigation, route}) => {
     setSelectedDay(prev => calendarFormattedDate(moment(prev).add(-1, 'day')));
   };
 
+  const closeModal = () => {
+    setModalVisible(false)
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <Header text={headerMonthText} onGoBackHandle={() => navigation.goBack()}>
+      <Header
+        text={headerMonthText}
+        onGoBackHandle={navigation.goBack}
+        rightTopElement={
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text style={styles.goBackText}>{'Create todo'}</Text>
+          </TouchableOpacity>
+        }>
         <SwipeableWeekCalendar
           startWeekDate={selectedDay}
           selectedDate={selectedDay}
@@ -87,6 +119,25 @@ const ScheduleScreen = ({navigation, route}) => {
           onSwipeRight={scheduleSwipeRightHandle}
         />
       </View>
+      <Modal
+        animationIn='slideInDown'
+        animationOut='slideOutUp'
+        isVisible={isModalVisible}
+        animationInTiming={700}
+        animationOutTiming={700}
+        backdropTransitionInTiming={500}
+        backdropTransitionOutTiming={500}
+        swipeDirection={['up']}
+        onSwipeComplete={closeModal}
+        onBackdropPress={closeModal}
+        style={{margin: 0}}
+      >
+        <View style={styles.modalContentWrapper}>
+          <Text style={{color: COLORS.WHITE, textAlign: 'center'}}>
+            {'Create Todo'}
+          </Text>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };

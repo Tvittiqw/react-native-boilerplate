@@ -32,6 +32,7 @@
     "react-native-bidirectional-infinite-scroll": "^0.3.3",
     "react-native-gesture-handler": "^2.5.0",
     "react-native-localize": "^2.2.1",
+    "react-native-modal": "^13.0.1",
     "react-native-picker-select": "^8.0.4",
     "react-native-reanimated": "^2.9.1",
     "react-native-safari-view": "^2.1.0",

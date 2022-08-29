@@ -25,9 +25,8 @@ import {WebView} from 'react-native-webview';
 const LoginScreen = ({navigation}) => {
   const [validateOnChange, setValidateOnChange] = useState(false);
   const [uri, setURL] = useState('');
-  const {isLoading, isLoginError, loginError} = useSelector(
-    state => state.auth,
-  );
+  const {isLoginError, loginError} = useSelector(state => state?.serverErrors?.loginAndSignup);
+  const {isRequestLoading} = useSelector(state => state?.loading);
 
   const dispatch = useTypedDispatch();
 
@@ -129,7 +128,7 @@ const LoginScreen = ({navigation}) => {
             errorMessage={loginError}
           />
           <AnimatedLoader
-            visible={isLoading}
+            visible={isRequestLoading}
             overlayColor="rgba(255,255,255,0.75)"
             source={require('../../../config/loader.json')}
             animationStyle={styles.lottie}

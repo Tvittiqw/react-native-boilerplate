@@ -23,9 +23,8 @@ const SignUpScreen = ({navigation}) => {
     useState(false);
   const [validateSecondStepOnChange, setValidateSecondStepOnChange] =
     useState(false);
-  const {isLoading, isSignupError, signupError} = useSelector(
-    state => state.auth,
-  );
+  const {isSignupError, signupError} = useSelector(state => state?.serverErrors?.loginAndSignup);
+  const {isRequestLoading} = useSelector(state => state.loading);
 
   const dispatch = useTypedDispatch();
 
@@ -81,7 +80,7 @@ const SignUpScreen = ({navigation}) => {
               errorMessage={signupError}
             />
             <AnimatedLoader
-              visible={isLoading}
+              visible={isRequestLoading}
               overlayColor="rgba(255,255,255,0.75)"
               source={require('../../../config/loader.json')}
               animationStyle={styles.lottie}
