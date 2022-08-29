@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
   },
   modalContentWrapper: {
     flex: 1,
-    backgroundColor: COLORS.WHITE,
-    marginTop: 100,
-    marginBottom: 0,
+    backgroundColor: COLORS.GRAY,
+    marginBottom: 100,
+    marginTop: 0,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 40,
@@ -120,19 +120,22 @@ const ScheduleScreen = ({navigation, route}) => {
         />
       </View>
       <Modal
-        animationIn='slideInUp'
-        animationOut='slideOutDown'
+        animationIn='slideInDown'
+        animationOut='slideOutUp'
         isVisible={isModalVisible}
         animationInTiming={700}
         animationOutTiming={700}
         backdropTransitionInTiming={500}
         backdropTransitionOutTiming={500}
-        swipeDirection={['down']}
+        swipeDirection={['up']}
         onSwipeComplete={closeModal}
         onBackdropPress={closeModal}
         style={{margin: 0}}
       >
         <View style={styles.modalContentWrapper}>
+          <Text style={{color: COLORS.WHITE, textAlign: 'center'}}>
+            {'Create Todo'}
+          </Text>
         </View>
       </Modal>
     </SafeAreaView>
