@@ -34,12 +34,11 @@ const styles = StyleSheet.create({
   modalContentWrapper: {
     flex: 1,
     backgroundColor: COLORS.WHITE,
-    marginHorizontal: 8,
-    marginTop: 25,
-    marginBottom: 15,
+    marginTop: 100,
+    marginBottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 36,
+    borderRadius: 40,
   }
 });
 
@@ -121,16 +120,17 @@ const ScheduleScreen = ({navigation, route}) => {
         />
       </View>
       <Modal
-        animationIn='slideInDown'
-        animationOut='slideOutUp'
+        animationIn='slideInUp'
+        animationOut='slideOutDown'
         isVisible={isModalVisible}
         animationInTiming={700}
         animationOutTiming={700}
         backdropTransitionInTiming={500}
         backdropTransitionOutTiming={500}
-        swipeDirection={['up']}
+        swipeDirection={['down']}
         onSwipeComplete={closeModal}
         onBackdropPress={closeModal}
+        style={{margin: 0}}
       >
         <View style={styles.modalContentWrapper}>
         </View>

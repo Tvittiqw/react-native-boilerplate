@@ -1,13 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Platform, SafeAreaView, Switch, Text, TouchableOpacity, View,} from 'react-native';
+import {Platform, SafeAreaView, Switch, Text, TouchableOpacity, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import styles from './styles';
 import RNPickerSelect from 'react-native-picker-select';
 import appLanguagesList from '../../constants/languages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../redux/auth/authSlice';
-import {useThemeContext} from "../../context/theme/ThemeProvider";
+import {useThemeContext} from '../../context/theme/ThemeProvider';
+import AnimatedLoader from 'react-native-animated-loader';
 
 const SettingsScreen = ({navigation}) => {
   const {t, i18n} = useTranslation();
@@ -18,6 +19,7 @@ const SettingsScreen = ({navigation}) => {
   );
 
   const [isSelected, setSelected] = useState(false);
+  const {isRequestLoading} = useSelector(state => state.loading);
 
   const {isDynamicTheme, changeThemeStatus} = useThemeContext();
 
@@ -92,6 +94,15 @@ const SettingsScreen = ({navigation}) => {
           <Text style={styles.navLink}>{t('settings.logout_text')}</Text>
         </TouchableOpacity>
       </View>
+      <AnimatedLoader
+        visible={isRequestLoading}
+        overlayColor="rgba(255,255,255,0.75)"
+        source={require('../../config/loader.json')}
+        animationStyle={styles.lottie}
+        speed={1}
+      >
+        <Text>Logout...</Text>
+      </AnimatedLoader>
     </SafeAreaView>
   );
 };

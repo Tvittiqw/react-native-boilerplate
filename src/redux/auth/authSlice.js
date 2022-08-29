@@ -2,28 +2,33 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {signUp, login} from '../../requests/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {errorHandler} from '../../utils/helpers';
+import {changeIsLoadingStatus} from "../loading/loadingSlice";
+import {setLoginError, setSignupError} from '../serverErrors/loginAndSignupErrorsSlice';
 
 const initialState = {
   userInfo: null,
   isAuth: false,
-  isLoading: false,
-  isLoginError: false,
-  isSignupError: false,
-  loginError: '',
-  signupError: '',
   token: null,
 };
 
 export const loginRequest = createAsyncThunk(
   'auth/login',
   async (loginFormData, thunkApi) => {
+    thunkApi.dispatch(changeIsLoadingStatus(true))
+    thunkApi.dispatch(setLoginError({errorMessage: '', isError: false}));
     try {
       const response = await login(loginFormData);
       if (response && response.data) {
         return thunkApi.fulfillWithValue(response.data);
       }
     } catch (err) {
+      thunkApi.dispatch(setLoginError({
+        errorMessage: errorHandler(err)?.message,
+        isError: true,
+      }));
       return thunkApi.rejectWithValue(errorHandler(err));
+    } finally {
+      thunkApi.dispatch(changeIsLoadingStatus(false))
     }
   },
 );
@@ -48,14 +53,21 @@ export const googleAuth = createAsyncThunk(
 export const signUpRequest = createAsyncThunk(
   'auth/signUp',
   async (signupFormData, thunkApi) => {
+    thunkApi.dispatch(changeIsLoadingStatus(true))
+    thunkApi.dispatch(setSignupError({errorMessage: '', isError: false}));
     try {
       const response = await signUp(signupFormData);
       if (response && response.data) {
-        // await AsyncStorage.setItem('@Token', response.data.tokens.access.token);
         return thunkApi.fulfillWithValue(response.data);
       }
     } catch (err) {
+      thunkApi.dispatch(setSignupError({
+        errorMessage: errorHandler(err)?.message,
+        isError: true,
+      }));
       return thunkApi.rejectWithValue(errorHandler(err));
+    } finally {
+      thunkApi.dispatch(changeIsLoadingStatus(false))
     }
   },
 );
@@ -63,6 +75,12 @@ export const signUpRequest = createAsyncThunk(
 export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   // TODO
   // Add request to server (with logout logic)
+  thunkApi.dispatch(changeIsLoadingStatus(true))
+  try {
+    await later(2000)
+  } finally {
+    thunkApi.dispatch(changeIsLoadingStatus(false))
+  }
   thunkApi.dispatch({type: 'logout'})
 });
 
@@ -71,28 +89,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [loginRequest.pending.type]: state => {
-      state.isLoading = true;
-      state.isLoginError = false;
-      state.loginError = '';
-    },
     [loginRequest.fulfilled.type]: (state, {payload}) => {
       state.userInfo = {
         user: payload.user,
       };
       state.token = payload.tokens.access.token;
       state.isAuth = true;
-      state.isLoading = false;
-    },
-    [loginRequest.rejected.type]: (state, {payload}) => {
-      state.isLoading = false;
-      state.isLoginError = true;
-      state.loginError = payload.message;
-    },
-    [signUpRequest.pending.type]: state => {
-      state.isLoading = true;
-      state.isSignupError = false;
-      state.signupError = '';
     },
     [signUpRequest.fulfilled.type]: (state, {payload}) => {
       state.userInfo = {
@@ -100,19 +102,7 @@ const authSlice = createSlice({
       };
       state.token = payload.tokens.access.token;
       state.isAuth = true;
-      state.isLoading = false;
     },
-    [signUpRequest.rejected.type]: (state, {payload}) => {
-      state.isLoading = false;
-      state.isSignupError = true;
-      state.signupError = payload.message;
-    },
-    [logout.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [logout.fulfilled.type]: (state) => {
-      state.isLoading = false;
-    }
   },
 });
 

@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: 20,
   },
+  lottie: {
+    width: 100,
+    height: 100,
+  },
 });
 
 export default styles;
