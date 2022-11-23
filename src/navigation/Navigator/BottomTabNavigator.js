@@ -1,8 +1,9 @@
 import React from 'react';
 import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {SearchScreen, SettingsScreen} from '../../screens';
-import CalendarStack from './CalendarStack';
+import {SearchScreen, SettingsScreen, ScheduleScreen} from '../../screens';
+// import CalendarStack from './CalendarStack';
+// calendar is not needed for now
 
 const Tab = createBottomTabNavigator();
 
@@ -10,8 +11,8 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name={'CalendarStack'}
-        component={CalendarStack}
+        name={'Schedule'}
+        component={ScheduleScreen}
         options={{
           headerShown: false,
           tabBarIcon: () => (

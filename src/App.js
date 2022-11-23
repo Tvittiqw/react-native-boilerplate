@@ -1,24 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import {LogBox} from 'react-native';
+import {LogBox, View, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
 import reduxSettings from './redux/store';
 import moment from 'moment';
-import {SplashScreen} from './screens';
+// import {SplashScreen} from './screens';
 import {useTranslation} from 'react-i18next';
 import linking from './services/linking';
 import 'moment/locale/ru';
-import ThemeProvider from "./context/theme/ThemeProvider";
-import { PersistGate } from 'redux-persist/integration/react'
+import ThemeProvider from './context/theme/ThemeProvider';
+import {PersistGate} from 'redux-persist/integration/react';
 import Navigator from './navigation/Navigator';
-
-const {store, persistor} = reduxSettings
+import SplashScreen from 'react-native-splash-screen';
+const {store, persistor} = reduxSettings;
 
 const App = () => {
   const [isInitApp, setInitApp] = useState(false);
 
+  const [isAppOpen, setAppOpen] = useState(false);
   const [isSettingsSetup, setSettingsSetup] = useState(false);
-  const [splashAnimationFinish, setSplashAnimationFinish] = useState(false);
+  // const [splashAnimationFinish, setSplashAnimationFinish] = useState(false);
   const [dynamicThemeStatus, setDynamicThemeStatus] = useState(false);
 
   const {i18n} = useTranslation();
@@ -27,7 +28,7 @@ const App = () => {
     const status = await AsyncStorage.getItem('@isDynamicTheme');
     JSON.parse(status);
     if (status !== null || status !== 'null') {
-      setDynamicThemeStatus(!!status)
+      setDynamicThemeStatus(!!status);
     } else {
       setDynamicThemeStatus(false);
     }
@@ -52,6 +53,7 @@ const App = () => {
 
   useEffect(() => {
     initAppSettings();
+    SplashScreen.hide();
   }, []);
 
   useEffect(() => {
@@ -62,16 +64,16 @@ const App = () => {
   LogBox.ignoreLogs(['ViewPropTypes']);
 
   useEffect(() => {
-    if (isSettingsSetup && splashAnimationFinish) {
+    if (isSettingsSetup) {
       setInitApp(true);
     }
-  }, [isSettingsSetup, splashAnimationFinish]);
+  }, [isSettingsSetup]);
 
   return (
     <Provider store={store} linking={linking}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider themeStatusFromSettings={dynamicThemeStatus}>
-          <Navigator/>
+          <Navigator />
         </ThemeProvider>
       </PersistGate>
     </Provider>

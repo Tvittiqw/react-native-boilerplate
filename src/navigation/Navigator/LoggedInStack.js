@@ -5,17 +5,16 @@ import BottomTabNavigator from './BottomTabNavigator';
 const LoggedInNavigator = createNativeStackNavigator();
 
 const LoggedInStack = () => {
-    const {Navigator, Screen} = LoggedInNavigator;
-    return (
-        <Navigator>
-            <Screen
-                name={'BottomTab'}
-                component={BottomTabNavigator}
-                options={{headerShown: false}}
-            />
-        </Navigator>
-    )
-}
+  const {Navigator, Screen} = LoggedInNavigator;
+  return (
+    <Navigator>
+      <Screen
+        name={'BottomTab'}
+        component={BottomTabNavigator}
+        options={{headerShown: false}}
+      />
+    </Navigator>
+  );
+};
 
 export default LoggedInStack;
-
