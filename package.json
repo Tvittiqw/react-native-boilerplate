@@ -19,7 +19,6 @@
     "@reduxjs/toolkit": "^1.8.1",
     "@stream-io/flat-list-mvcp": "^0.10.2",
     "axios": "^0.26.1",
-    "axios-auth-refresh": "^3.3.4",
     "formik": "^2.2.9",
     "i18next": "^21.6.16",
     "lottie-ios": "3.2.3",

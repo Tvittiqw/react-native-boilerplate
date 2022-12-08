@@ -13,7 +13,7 @@ import SwipeableWeekCalendar from '../../components/CustomCalendar/WeekCalendar/
 import {COLORS} from '../../constants/global';
 import {calendarFormattedDate} from '../../utils/dateUtils';
 import Modal from 'react-native-modal';
-import apiClient from "../../services/apiClient";
+import apiClient from '../../services/apiClient';
 
 const styles = StyleSheet.create({
   headerContainer: {
