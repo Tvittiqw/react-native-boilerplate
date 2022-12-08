@@ -11,11 +11,10 @@ import {
 import {LoginForm} from '../../../components/auth';
 import styles from './styles';
 import loginValidationSchema from '../../../validators/loginValidationSchema';
-import {useTypedDispatch} from '../../../hooks/storeHooks/typedStoreHooks';
 import {loginRequest, googleAuth} from '../../../redux/auth/authSlice';
 import {useIsFocused} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import AnimatedLoader from 'react-native-animated-loader';
 import {socialAthUrls} from '../../../config/config';
 
@@ -25,10 +24,12 @@ import {WebView} from 'react-native-webview';
 const LoginScreen = ({navigation}) => {
   const [validateOnChange, setValidateOnChange] = useState(false);
   const [uri, setURL] = useState('');
-  const {isLoginError, loginError} = useSelector(state => state?.serverErrors?.loginAndSignup);
+  const {isLoginError, loginError} = useSelector(
+    state => state?.serverErrors?.loginAndSignup,
+  );
   const {isRequestLoading} = useSelector(state => state?.loading);
 
-  const dispatch = useTypedDispatch();
+  const dispatch = useDispatch();
 
   const focused = useIsFocused();
 
@@ -47,6 +48,19 @@ const LoginScreen = ({navigation}) => {
   }, [focused]);
 
   useEffect(() => {
+    const handleOpenURL = url => {
+      const data = decodeURI(url);
+      const arr = data.split('user=');
+      const query = arr[1];
+      const parsedQuery = JSON.parse(query);
+      setURL('');
+      dispatch(googleAuth(parsedQuery));
+      if (Platform.OS === 'ios') {
+        SafariView.dismiss();
+      } else {
+        setURL('');
+      }
+    };
     const subscription = Linking.addEventListener('url', url =>
       handleOpenURL(url.url),
     );
@@ -54,7 +68,7 @@ const LoginScreen = ({navigation}) => {
     return () => {
       subscription.remove('url', handleOpenURL);
     };
-  }, []);
+  }, [dispatch]);
 
   const signIn = async () => {
     try {
@@ -62,20 +76,6 @@ const LoginScreen = ({navigation}) => {
       openUrl(socialAthUrls.google);
     } catch (error) {
       console.log('error', error);
-    }
-  };
-
-  const handleOpenURL = url => {
-    const data = decodeURI(url);
-    const arr = data.split('user=');
-    const query = arr[1];
-    const parsedQuery = JSON.parse(query);
-    setURL('');
-    dispatch(googleAuth(parsedQuery));
-    if (Platform.OS === 'ios') {
-      SafariView.dismiss();
-    } else {
-      setURL('');
     }
   };
 

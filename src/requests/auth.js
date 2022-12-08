@@ -12,3 +12,7 @@ export const googleAuthRequest = () => {
 export const login = body => {
   return apiClient.post('v1/auth/login', body);
 };
+
+export const logoutReq = body => {
+  return apiClient.post('v1/auth/logout', body);
+}

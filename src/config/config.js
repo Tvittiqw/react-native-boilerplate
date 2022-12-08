@@ -1,6 +1,7 @@
 export const api = {
-  host: '192.168.1.5',
+  // host: '192.168.1.5',
   port: '3000',
+  host: 'localhost',
   // host: 'toomobile.herokuapp.com',
   // port: '',
 };

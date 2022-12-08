@@ -13,6 +13,7 @@ import SwipeableWeekCalendar from '../../components/CustomCalendar/WeekCalendar/
 import {COLORS} from '../../constants/global';
 import {calendarFormattedDate} from '../../utils/dateUtils';
 import Modal from 'react-native-modal';
+import apiClient from '../../services/apiClient';
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -39,25 +40,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 40,
-  }
+  },
 });
 
 const Header = props => {
-  const {
-    children,
-    rightTopElement = null,
-    leftTopElement = null,
-  } = props
+  const {children, rightTopElement = null, leftTopElement = null} = props;
   return (
     <View style={styles.headerContainer}>
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-        {leftTopElement ? leftTopElement : <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={props.onGoBackHandle}
-          style={styles.headerTopRow}
-        >
-          <Text style={styles.goBackText}>{props.text}</Text>
-        </TouchableOpacity>}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        {leftTopElement ? (
+          leftTopElement
+        ) : (
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={props.onGoBackHandle}
+            style={styles.headerTopRow}>
+            <Text style={styles.goBackText}>{props.text}</Text>
+          </TouchableOpacity>
+        )}
         {rightTopElement}
       </View>
       {children}
@@ -70,7 +75,7 @@ const ScheduleScreen = ({navigation, route}) => {
     route.params?.selectedDay || moment(),
   );
 
-  const [isModalVisible, setModalVisible] = useState(false)
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const {i18n} = useTranslation();
 
@@ -91,8 +96,13 @@ const ScheduleScreen = ({navigation, route}) => {
   };
 
   const closeModal = () => {
-    setModalVisible(false)
-  }
+    setModalVisible(false);
+  };
+
+  const fetchSchedule = async () => {
+    const res = await apiClient.get('v1/schedule');
+    console.log('---------schedule', res.data);
+  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
@@ -120,8 +130,8 @@ const ScheduleScreen = ({navigation, route}) => {
         />
       </View>
       <Modal
-        animationIn='slideInDown'
-        animationOut='slideOutUp'
+        animationIn="slideInDown"
+        animationOut="slideOutUp"
         isVisible={isModalVisible}
         animationInTiming={700}
         animationOutTiming={700}
@@ -130,8 +140,7 @@ const ScheduleScreen = ({navigation, route}) => {
         swipeDirection={['up']}
         onSwipeComplete={closeModal}
         onBackdropPress={closeModal}
-        style={{margin: 0}}
-      >
+        style={{margin: 0}}>
         <View style={styles.modalContentWrapper}>
           <Text style={{color: COLORS.WHITE, textAlign: 'center'}}>
             {'Create Todo'}

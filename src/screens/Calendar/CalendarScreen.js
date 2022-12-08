@@ -26,7 +26,7 @@ const CalendarScreen = ({navigation}) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({title: t('calendar.title')});
-  }, []);
+  }, [navigation, t]);
 
   return (
     <SafeAreaView style={{flex: 1}}>

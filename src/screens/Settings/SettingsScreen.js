@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Platform, SafeAreaView, Switch, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Platform,
+  SafeAreaView,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import styles from './styles';
 import RNPickerSelect from 'react-native-picker-select';
@@ -28,7 +35,7 @@ const SettingsScreen = ({navigation}) => {
       await i18n.changeLanguage(selectedLanguage.value);
       await AsyncStorage.setItem('@language', selectedLanguage?.value);
     }
-  }, [selectedLanguage]);
+  }, [selectedLanguage, i18n]);
 
   useEffect(() => {
     if (isSelected && Platform.OS === 'android') {
@@ -99,8 +106,7 @@ const SettingsScreen = ({navigation}) => {
         overlayColor="rgba(255,255,255,0.75)"
         source={require('../../config/loader.json')}
         animationStyle={styles.lottie}
-        speed={1}
-      >
+        speed={1}>
         <Text>Logout...</Text>
       </AnimatedLoader>
     </SafeAreaView>
