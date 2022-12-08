@@ -1,51 +1,57 @@
-import React, {createContext, useCallback, useContext, useEffect, useState} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const DynamicTheme = createContext(null)
+export const DynamicTheme = createContext(null);
 
-const ThemeProvider = ({ children, themeStatusFromSettings }) => {
-    const [isDynamicTheme, setIsDynamicTheme] = useState(themeStatusFromSettings)
+const ThemeProvider = ({children, themeStatusFromSettings}) => {
+  const [isDynamicTheme, setIsDynamicTheme] = useState(themeStatusFromSettings);
 
-    const [isChangeThemeByToggle, setChangeThemeByToggle] = useState(false)
+  const [isChangeThemeByToggle, setChangeThemeByToggle] = useState(false);
 
-    const saveInStorageThemeConfig = useCallback(async () => {
-        await AsyncStorage.setItem(
-            '@isDynamicTheme',
-            JSON.stringify(isDynamicTheme),
-        )
-    }, [isDynamicTheme])
+  const saveInStorageThemeConfig = useCallback(async () => {
+    await AsyncStorage.setItem(
+      '@isDynamicTheme',
+      JSON.stringify(isDynamicTheme),
+    );
+  }, [isDynamicTheme]);
 
-    useEffect(() => {
-        if (isChangeThemeByToggle) {
-            saveInStorageThemeConfig()
-        }
-    }, [isChangeThemeByToggle, saveInStorageThemeConfig])
-
-    useEffect(() => {
-        setIsDynamicTheme(themeStatusFromSettings)
-    }, [themeStatusFromSettings])
-
-    const themeContextValue = {
-        isDynamicTheme,
-        changeThemeStatus: () => {
-            setIsDynamicTheme(prevState => !prevState);
-            setChangeThemeByToggle(true);
-        },
+  useEffect(() => {
+    if (isChangeThemeByToggle) {
+      saveInStorageThemeConfig();
     }
+  }, [isChangeThemeByToggle, saveInStorageThemeConfig]);
 
-    return (
-        <DynamicTheme.Provider value={themeContextValue}>
-            {children}
-        </DynamicTheme.Provider>
-    )
-}
+  useEffect(() => {
+    setIsDynamicTheme(themeStatusFromSettings);
+  }, [themeStatusFromSettings]);
 
-export default ThemeProvider
+  const themeContextValue = {
+    isDynamicTheme,
+    changeThemeStatus: () => {
+      setIsDynamicTheme(prevState => !prevState);
+      setChangeThemeByToggle(true);
+    },
+  };
+
+  return (
+    <DynamicTheme.Provider value={themeContextValue}>
+      {children}
+    </DynamicTheme.Provider>
+  );
+};
+
+export default ThemeProvider;
 
 export const useThemeContext = () => {
-    const {isDynamicTheme, changeThemeStatus} = useContext(DynamicTheme)
-    return {
-        isDynamicTheme,
-        changeThemeStatus
-    }
-}
+  const {isDynamicTheme, changeThemeStatus} = useContext(DynamicTheme);
+  return {
+    isDynamicTheme,
+    changeThemeStatus,
+  };
+};

@@ -54,7 +54,7 @@ const SwipeGestureContainer = props => {
 
   useEffect(() => {
     onIndexChange && onIndexChange(mainIndex);
-  }, [mainIndex]);
+  }, [mainIndex, onIndexChange]);
 
   const handleAnimation = index => {
     if (

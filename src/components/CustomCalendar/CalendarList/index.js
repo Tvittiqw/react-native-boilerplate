@@ -1,99 +1,99 @@
-import React, {useMemo, useRef, useEffect, useState, useCallback} from 'react'
-import {FlatList, View, StyleSheet} from 'react-native'
-import moment from 'moment'
-import CalendarListItem from "./Item";
+import React, {useMemo, useRef, useEffect, useState, useCallback} from 'react';
+import {FlatList, View, StyleSheet} from 'react-native';
+import moment from 'moment';
+import CalendarListItem from './Item';
 // import {FlatList as InfiniteFlatList} from 'react-native-bidirectional-infinite-scroll'
 // import {FlatList as InfiniteFlatList} from '@stream-io/flat-list-mvcp'
 
-
-
-const PAST_SCROLL_RANGE = 30
-const FUTURE_SCROLL_RANGE = 30
-const CALENDAR_HEIGHT = 360
+const PAST_SCROLL_RANGE = 30;
+const FUTURE_SCROLL_RANGE = 30;
+const CALENDAR_HEIGHT = 360;
 
 const styles = StyleSheet.create({
-    flatListContainer: {
-        flex: 1
+  flatListContainer: {
+    flex: 1,
+  },
+});
+
+const CalendarList = props => {
+  const {
+    current,
+    pastScrollRange,
+    futureScrollRange,
+    showScrollIndicator,
+    horizontal,
+    calendarHeight = CALENDAR_HEIGHT,
+    onSelectedDay,
+  } = props;
+
+  const date = useMemo(() => (current ? moment(current) : moment()), [current]);
+
+  const listRef = useRef();
+
+  const [calendarsData, todayIndex] = useMemo(() => {
+    const rows = [];
+    for (let i = 0; i <= pastScrollRange; i++) {
+      rows.push(date.clone().add(i - pastScrollRange, 'month'));
     }
-})
-
-const CalendarList = (props) => {
-
-    const {
-        current,
-        pastScrollRange,
-        futureScrollRange,
-        showScrollIndicator,
-        horizontal,
-        calendarHeight = CALENDAR_HEIGHT,
-        onSelectedDay,
-    } = props
-
-    const date = current ? moment(current) : moment()
-
-    const listRef = useRef()
-
-    const [calendarsData, todayIndex] = useMemo(() => {
-        const rows = []
-        for (let i = 0; i <= pastScrollRange; i++) {
-            rows.push(date.clone().add(i - pastScrollRange, 'month'))
-        }
-        const todayIndex = rows.length - 1
-        for (let i = 1; i <= futureScrollRange; i++) {
-            rows.push(date.clone().add(i, 'month'))
-        }
-        return [rows, todayIndex]
-    }, [pastScrollRange, futureScrollRange])
-
-    const renderItem = useCallback(({ item }) => {
-        return (
-            <View>
-                <CalendarListItem
-                    item={item}
-                    calendarHeight={calendarHeight}
-                    onPressDay={(day) => {
-                        onSelectedDay && onSelectedDay(day)
-                    }}
-                />
-            </View>
-        )
-    }, [calendarHeight])
-
-    const getItemLayout = (data, index) => {
-        return {
-            length: calendarHeight,
-            offset: calendarHeight * index,
-            index
-        }
+    const todayInd = rows.length - 1;
+    for (let i = 1; i <= futureScrollRange; i++) {
+      rows.push(date.clone().add(i, 'month'));
     }
+    return [rows, todayInd];
+  }, [pastScrollRange, futureScrollRange, date]);
 
-    return (
-        <View style={styles.flatListContainer}>
-            <FlatList
-                ref={listRef}
-                initialListSize={pastScrollRange + futureScrollRange + 1}
-                data={calendarsData}
-                renderItem={renderItem}
-                initialScrollIndex={todayIndex}
-                getItemLayout={getItemLayout}
-                keyExtractor={props.keyExtractor}
-                showsVerticalScrollIndicator={showScrollIndicator}
-                showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
-            />
+  const renderItem = useCallback(
+    ({item}) => {
+      return (
+        <View>
+          <CalendarListItem
+            item={item}
+            calendarHeight={calendarHeight}
+            onPressDay={day => {
+              onSelectedDay && onSelectedDay(day);
+            }}
+          />
         </View>
-    )
-}
+      );
+    },
+    [calendarHeight, onSelectedDay],
+  );
 
-export default CalendarList
+  const getItemLayout = (data, index) => {
+    return {
+      length: calendarHeight,
+      offset: calendarHeight * index,
+      index,
+    };
+  };
+
+  return (
+    <View style={styles.flatListContainer}>
+      <FlatList
+        ref={listRef}
+        initialListSize={pastScrollRange + futureScrollRange + 1}
+        data={calendarsData}
+        renderItem={renderItem}
+        initialScrollIndex={todayIndex}
+        getItemLayout={getItemLayout}
+        keyExtractor={props.keyExtractor}
+        showsVerticalScrollIndicator={showScrollIndicator}
+        showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
+      />
+    </View>
+  );
+};
+
+export default CalendarList;
 
 CalendarList.defaultProps = {
-    pastScrollRange: PAST_SCROLL_RANGE,
-    futureScrollRange: FUTURE_SCROLL_RANGE,
-    horizontal: false,
-    scrollEnabled: true,
-    keyExtractor: (item) => item.toString(),
-    showScrollIndicator: false,
-}
+  pastScrollRange: PAST_SCROLL_RANGE,
+  futureScrollRange: FUTURE_SCROLL_RANGE,
+  horizontal: false,
+  scrollEnabled: true,
+  keyExtractor: item => item.toString(),
+  showScrollIndicator: false,
+};
 
 // TODO
 /* Calendar infinite scroll */

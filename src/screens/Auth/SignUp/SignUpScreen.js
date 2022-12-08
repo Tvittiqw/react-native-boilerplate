@@ -10,10 +10,9 @@ import {
 import {SignUpForm} from '../../../components/auth';
 import styles from './styles';
 import signupValidationSchema from '../../../validators/signupValidationSchema';
-import {useTypedDispatch} from '../../../hooks/storeHooks/typedStoreHooks';
 import {signUpRequest} from '../../../redux/auth/authSlice';
 import {useTranslation} from 'react-i18next';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import AnimatedLoader from 'react-native-animated-loader';
 
 const SignUpScreen = ({navigation}) => {
@@ -23,10 +22,12 @@ const SignUpScreen = ({navigation}) => {
     useState(false);
   const [validateSecondStepOnChange, setValidateSecondStepOnChange] =
     useState(false);
-  const {isSignupError, signupError} = useSelector(state => state?.serverErrors?.loginAndSignup);
+  const {isSignupError, signupError} = useSelector(
+    state => state?.serverErrors?.loginAndSignup,
+  );
   const {isRequestLoading} = useSelector(state => state.loading);
 
-  const dispatch = useTypedDispatch();
+  const dispatch = useDispatch();
 
   const {t} = useTranslation();
 
