@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../redux/auth/authSlice';
 import {useThemeContext} from '../../context/theme/ThemeProvider';
 import AnimatedLoader from 'react-native-animated-loader';
+import themeModesList from '../../constants/themeModes';
 
 const SettingsScreen = ({navigation}) => {
   const {t, i18n} = useTranslation();
@@ -24,11 +25,13 @@ const SettingsScreen = ({navigation}) => {
   const [selectedLanguage, setSelectedLanguage] = useState(() =>
     appLanguagesList.find(el => el.value === i18n.language),
   );
+  const {themeMode, changeThemeMode} = useThemeContext();
+  const [localSelectedThemeMode, setLocalSelectedThemeMode] = useState(() =>
+    themeModesList.find(el => el.value === themeMode),
+  );
 
   const [isSelected, setSelected] = useState(false);
   const {isRequestLoading} = useSelector(state => state.loading);
-
-  const {isDynamicTheme, changeThemeStatus} = useThemeContext();
 
   const setupLanguageHandler = useCallback(async () => {
     if (selectedLanguage?.value) {
@@ -36,6 +39,13 @@ const SettingsScreen = ({navigation}) => {
       await AsyncStorage.setItem('@language', selectedLanguage?.value);
     }
   }, [selectedLanguage, i18n]);
+
+  const saveInStorageThemeConfig = useCallback(async () => {
+    if (localSelectedThemeMode?.value) {
+      changeThemeMode(localSelectedThemeMode.value);
+      await AsyncStorage.setItem('@themeMode', localSelectedThemeMode.value);
+    }
+  }, [localSelectedThemeMode, changeThemeMode]);
 
   useEffect(() => {
     if (isSelected && Platform.OS === 'android') {
@@ -57,11 +67,33 @@ const SettingsScreen = ({navigation}) => {
           <Text>User Info</Text>
         </View>
 
-        <View style={styles.themeContainer}>
-          <Text>{t('settings.dynamic_theme')}</Text>
-
-          <Switch value={isDynamicTheme} onChange={changeThemeStatus} />
-        </View>
+        {Platform.OS === 'ios' ? (
+          <RNPickerSelect
+            useNativeAndroidPickerStyle={false}
+            placeholder={{}}
+            value={localSelectedThemeMode?.value}
+            items={themeModesList}
+            onValueChange={value => {
+              const mode = themeModesList.find(el => el.value === value);
+              setLocalSelectedThemeMode(mode);
+            }}
+            style={pickerStyles}
+            onDonePress={saveInStorageThemeConfig}>
+            <Text>{t('settings.dynamic_theme')}</Text>
+          </RNPickerSelect>
+        ) : (
+          <RNPickerSelect
+            fixAndroidTouchableBug
+            placeholder={{label: 'Select theme mode', color: 'gray'}}
+            onValueChange={async value => {
+              const mode = themeModesList.find(el => el.value === value);
+              await AsyncStorage.setItem('@themeMode', mode.value);
+              changeThemeMode(mode.value);
+            }}
+            items={themeModesList}>
+            <Text>{t('settings.dynamic_theme')}</Text>
+          </RNPickerSelect>
+        )}
 
         {Platform.OS === 'ios' ? (
           <RNPickerSelect
