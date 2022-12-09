@@ -11,8 +11,10 @@ import LoggedInStack from './LoggedInStack';
 import LoggedOutStack from './LoggedOutStack';
 
 const Navigator = () => {
-  const [appTheme, setAppTheme] = useState();
-  const {isDynamicTheme} = useThemeContext();
+  const {themeMode} = useThemeContext();
+  const [appTheme, setAppTheme] = useState(
+    themeMode === 'auto' ? Appearance.getColorScheme : themeMode,
+  );
 
   const {isAuth} = useSelector(state => state.auth);
 
@@ -21,14 +23,14 @@ const Navigator = () => {
   }, []);
 
   useEffect(() => {
-    if (isDynamicTheme) {
+    if (themeMode === 'auto') {
       setAppTheme(Appearance.getColorScheme());
       const unsubscribe = Appearance.addChangeListener(themeChangeListener);
       return () => unsubscribe.remove();
     } else {
-      setAppTheme('light');
+      setAppTheme(themeMode);
     }
-  }, [isDynamicTheme]);
+  }, [themeMode, themeChangeListener]);
 
   console.log('isauth', isAuth);
   return (

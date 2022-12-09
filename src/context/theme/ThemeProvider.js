@@ -9,34 +9,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const DynamicTheme = createContext(null);
 
-const ThemeProvider = ({children, themeStatusFromSettings}) => {
-  const [isDynamicTheme, setIsDynamicTheme] = useState(themeStatusFromSettings);
+const ThemeProvider = ({children, themeFromSettings}) => {
+  const [themeMode, setThemeMode] = useState(themeFromSettings || 'auto');
 
-  const [isChangeThemeByToggle, setChangeThemeByToggle] = useState(false);
-
-  const saveInStorageThemeConfig = useCallback(async () => {
-    await AsyncStorage.setItem(
-      '@isDynamicTheme',
-      JSON.stringify(isDynamicTheme),
-    );
-  }, [isDynamicTheme]);
+  const changeThemeMode = type => {
+    setThemeMode(type);
+  };
 
   useEffect(() => {
-    if (isChangeThemeByToggle) {
-      saveInStorageThemeConfig();
-    }
-  }, [isChangeThemeByToggle, saveInStorageThemeConfig]);
-
-  useEffect(() => {
-    setIsDynamicTheme(themeStatusFromSettings);
-  }, [themeStatusFromSettings]);
+    setThemeMode(themeFromSettings || 'auto');
+  }, [themeFromSettings]);
 
   const themeContextValue = {
-    isDynamicTheme,
-    changeThemeStatus: () => {
-      setIsDynamicTheme(prevState => !prevState);
-      setChangeThemeByToggle(true);
-    },
+    themeMode,
+    changeThemeMode,
   };
 
   return (
@@ -49,9 +35,9 @@ const ThemeProvider = ({children, themeStatusFromSettings}) => {
 export default ThemeProvider;
 
 export const useThemeContext = () => {
-  const {isDynamicTheme, changeThemeStatus} = useContext(DynamicTheme);
+  const {themeMode, changeThemeMode} = useContext(DynamicTheme);
   return {
-    isDynamicTheme,
-    changeThemeStatus,
+    changeThemeMode,
+    themeMode,
   };
 };
