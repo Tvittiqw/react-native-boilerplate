@@ -7,7 +7,7 @@ const CustomInput = ({
   error,
   ...inputProps
 }) => {
-  const [hidePassword, setHidePassword] = useState(passwordInput);
+  const [hidePassword] = useState(passwordInput);
 
   const inputRef = useRef(null);
 

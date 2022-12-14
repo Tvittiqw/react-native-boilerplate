@@ -16,8 +16,18 @@
     "title": "Календарь",
     "shortWeekDays": ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
   },
+  "createSchedule": {
+    "title": "Создание Расписания",
+    "name": "Имя расписания",
+    "description": "Описание к расписанию",
+    "scheduleNamePlaceholder": "Введите имя для расписания",
+    "scheduleDescriptionPlaceholder": "Введите описание к расписанию",
+    "createScheduleAction": "Создать расписание",
+    "makePrivate": "Сделать приватным?"
+  },
   "search": {
-    "title": "Поиск"
+    "title": "Поиск",
+    "noSchedulesYet": "Нет еще расписаний"
   },
   "login": {
     "title": "Вход",

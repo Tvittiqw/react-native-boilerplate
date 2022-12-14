@@ -99,11 +99,6 @@ const ScheduleScreen = ({navigation, route}) => {
     setModalVisible(false);
   };
 
-  const fetchSchedule = async () => {
-    const res = await apiClient.get('v1/schedule');
-    console.log('---------schedule', res.data);
-  };
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Header

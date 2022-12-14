@@ -31,4 +31,12 @@ export const commonValues = {
   confirmPassword: Yup.string()
     .required('Confirm password is required!')
     .oneOf([Yup.ref('password'), null], 'Password should match'),
+  scheduleName: Yup.string()
+    .required('This field is required')
+    .min(2, 'Enter 2 characters at least')
+    .max(20, 'Name can be 20 characters or less'),
+  scheduleDescription: Yup.string()
+    .required('This field is required')
+    .min(2, 'Enter 2 characters at least')
+    .max(25, 'Description can be 25 characters or less'),
 };
