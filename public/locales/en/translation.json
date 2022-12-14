@@ -16,8 +16,18 @@
     "title": "Calendar",
     "shortWeekDays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   },
+  "createSchedule": {
+    "title": "Create Schedule",
+    "name": "Schedule name",
+    "description": "Schedule description",
+    "scheduleNamePlaceholder": "Enter name for schedule",
+    "scheduleDescriptionPlaceholder": "Enter description for schedule",
+    "createScheduleAction": "Create Schedule",
+    "makePrivate": "Make private?"
+  },
   "search": {
-    "title": "Search Screen"
+    "title": "Search Screen",
+    "noSchedulesYet": "No schedules yet"
   },
   "login": {
     "title": "Login",

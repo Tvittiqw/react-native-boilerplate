@@ -5,6 +5,7 @@ PODS:
   - AppAuth/Core (1.5.0)
   - AppAuth/ExternalUserAgent (1.5.0):
     - AppAuth/Core
+  - BEMCheckBox (1.4.1)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -88,9 +89,9 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.2)
   - libevent (2.1.12)
-  - lottie-ios (3.2.3)
-  - lottie-react-native (5.0.1):
-    - lottie-ios (~> 3.2.3)
+  - lottie-ios (3.4.4)
+  - lottie-react-native (5.1.4):
+    - lottie-ios (~> 3.4.0)
     - React-Core
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.06.28.00-v2):
@@ -302,17 +303,19 @@ PODS:
     - glog
   - react-native-background-timer (2.4.1):
     - React-Core
+  - react-native-pager-view (6.1.2):
+    - React-Core
   - react-native-safari-view (1.0.0):
     - React
-  - react-native-safe-area-context (4.2.4):
+  - react-native-safe-area-context (4.4.1):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
+    - React-Core
     - ReactCommon/turbomodule/core
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-webview (11.22.7):
+  - react-native-webview (11.26.0):
     - React-Core
   - React-perflogger (0.68.0)
   - React-RCTActionSheet (0.68.0):
@@ -379,20 +382,23 @@ PODS:
     - React-jsi (= 0.68.0)
     - React-logger (= 0.68.0)
     - React-perflogger (= 0.68.0)
-  - RNCAsyncStorage (1.17.3):
+  - RNCAsyncStorage (1.17.11):
     - React-Core
-  - RNCPicker (2.4.1):
+  - RNCCheckbox (0.5.14):
+    - BEMCheckBox (~> 1.4)
     - React-Core
-  - RNGestureHandler (2.5.0):
+  - RNCPicker (2.4.8):
     - React-Core
-  - RNGoogleSignin (8.0.0):
-    - GoogleSignIn (~> 6.2.2)
+  - RNGestureHandler (2.8.0):
+    - React-Core
+  - RNGoogleSignin (8.2.1):
+    - GoogleSignIn (~> 6.2)
     - React-Core
   - RNKeychain (8.1.1):
     - React-Core
-  - RNLocalize (2.2.1):
+  - RNLocalize (2.2.4):
     - React-Core
-  - RNReanimated (2.9.1):
+  - RNReanimated (2.13.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -419,10 +425,10 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.13.1):
+  - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.3.0):
+  - RNSVG (12.5.0):
     - React-Core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
@@ -475,6 +481,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safari-view (from `../node_modules/react-native-safari-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -492,6 +499,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
@@ -505,6 +513,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - BEMCheckBox
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -567,6 +576,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-background-timer:
     :path: "../node_modules/react-native-background-timer"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-safari-view:
     :path: "../node_modules/react-native-safari-view"
   react-native-safe-area-context:
@@ -601,6 +612,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCCheckbox:
+    :path: "../node_modules/@react-native-community/checkbox"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
   RNGestureHandler:
@@ -622,6 +635,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
@@ -642,8 +656,8 @@ SPEC CHECKSUMS:
   GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
-  lottie-react-native: a029a86e1689c86a07169c520ae770e84348cd20
+  lottie-ios: 8f97d3271e155c2d688875c29cd3c74908aef5f8
+  lottie-react-native: b702fab740cdb952a8e2354713d3beda63ff97b0
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: bab4a7c3d7eb9553b13773ee190f279712efd1fc
@@ -659,10 +673,11 @@ SPEC CHECKSUMS:
   React-jsinspector: 90f0bfd5d04e0b066c29216a110ffb9a6c34f23f
   React-logger: 8474fefa09d05f573a13c044cb0dfd751d4e52e3
   react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
+  react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
   react-native-safari-view: 955d7160d159241b8e9395d12d10ea0ef863dcdd
-  react-native-safe-area-context: f98b0b16d1546d208fc293b4661e3f81a895afd9
+  react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-webview: 227ba9205abb8579116b69ea5774d9744267c65a
+  react-native-webview: 994b9f8fbb504d6314dc40d83f94f27c6831b3bf
   React-perflogger: 15cb741d6c2379f4d3fc8f9e4d4e1110ef3020cb
   React-RCTActionSheet: ea9099db0597bd769430db1e2d011fd5fdb7fc5e
   React-RCTAnimation: 252df4749866f2654f37612f839522cac91c1165
@@ -675,15 +690,16 @@ SPEC CHECKSUMS:
   React-RCTVibration: 82fc52d3d96549b8c59a6c8c017d5a1a11457049
   React-runtimeexecutor: 9b1304f48e344c55bb3c36e13bf11461cb4da5d8
   ReactCommon: fab89a13b52f1ac42b59a0e4b4f76f21aea9eebe
-  RNCAsyncStorage: 005c0e2f09575360f142d0d1f1f15e4ec575b1af
-  RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
-  RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
-  RNGoogleSignin: b2179ba653c759b936404a7746fc5302f9de6a5a
+  RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
+  RNCCheckbox: 38989bbd3d7d536adf24ba26c6b3e6cefe0bea6f
+  RNCPicker: 0bf8ef8f7800524f32d2bb2a8bcadd53eda0ecd1
+  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
+  RNGoogleSignin: 3db2d849581299f425f5b61b90cb482a9e68c7af
   RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
-  RNLocalize: cbcb55d0e19c78086ea4eea20e03fe8000bbbced
-  RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
-  RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
-  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
+  RNLocalize: 0df7970cfc60389f00eb62fd7c097dc75af3fb4f
+  RNReanimated: b21b362b4b8ca921932e8b1718e88cf3a36f157e
+  RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
+  RNSVG: 6adc5c52d2488a476248413064b7f2832e639057
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 6671cf077f614314c22fd09ddf87d7abeee64e96
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
