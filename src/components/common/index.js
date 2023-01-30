@@ -1,5 +1,6 @@
 import CustomInput from './Inputs/CustomInput';
 import CustomButton from './Buttons/CustomButton';
+import RoundButton from './Buttons/RoundButton';
 import Header from './Header/Header';
 import WeekNamesComponent from './WeekNames';
 import TimeSchedule from './Schedule';
@@ -14,4 +15,5 @@ export {
   TimeSchedule,
   SwipeableTimeSchedule,
   SwipeGestureContainer,
+  RoundButton,
 };

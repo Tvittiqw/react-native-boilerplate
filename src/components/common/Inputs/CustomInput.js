@@ -18,7 +18,7 @@ const CustomInput = ({
   return (
     <>
       <TextInput
-        style={styles.inputContainer}
+        style={[inputContainerStyle, styles.inputContainer]}
         {...inputProps}
         secureTextEntry={hidePassword}
         ref={inputRef}

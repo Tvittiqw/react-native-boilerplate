@@ -13,3 +13,7 @@ export const errorHandler = err => {
     return err.message;
   }
 };
+
+export const delay = (delay, value) => {
+  return new Promise(resolve => setTimeout(resolve, delay, value)); //todo refactor
+};

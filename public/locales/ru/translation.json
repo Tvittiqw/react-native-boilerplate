@@ -55,5 +55,9 @@
     "title": "Сброс пароля",
     "new_password_placeholder": "Введите новый пароль",
     "reset_button_text": "Сбросить пароль"
+  },
+  "todo": {
+    "todo_placeholder": "Введите задачу"
+
   }
 }

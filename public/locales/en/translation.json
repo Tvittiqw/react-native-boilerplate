@@ -55,5 +55,9 @@
     "title": "Reset password",
     "new_password_placeholder": "Enter new password",
     "reset_button_text": "Reset password"
+  },
+  "todo": {
+    "todo_placeholder": "Type in task"
+
   }
 }

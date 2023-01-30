@@ -21,9 +21,9 @@ const loginAndSignupErrorsSlice = createSlice({
       state.isSignupError = isError;
       state.signupError = errorMessage;
     },
-
   },
 });
 
-export const {setLoginError, setSignupError} = loginAndSignupErrorsSlice.actions;
+export const {setLoginError, setSignupError} =
+  loginAndSignupErrorsSlice.actions;
 export default loginAndSignupErrorsSlice.reducer;

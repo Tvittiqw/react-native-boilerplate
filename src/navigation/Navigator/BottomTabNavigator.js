@@ -3,6 +3,7 @@ import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SearchScreen, SettingsScreen} from '../../screens';
 import ScheduleStack from './ScheduleStack';
+import {ScheduleScreen, InitCreateScheduleScreen} from '../../screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -11,7 +12,7 @@ const BottomTabNavigator = () => {
     <Tab.Navigator>
       <Tab.Screen
         name={'ScheduleStack'}
-        component={ScheduleStack}
+        component={ScheduleScreen}
         options={{
           headerShown: false,
           tabBarIcon: () => (

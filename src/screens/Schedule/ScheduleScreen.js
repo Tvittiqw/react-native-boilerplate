@@ -9,6 +9,7 @@ import {
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import {SwipeableTimeSchedule} from '../../components/common';
+import Todos from '../../components/Todos';
 import SwipeableWeekCalendar from '../../components/CustomCalendar/WeekCalendar/SwipeableWeekCalendar';
 import {COLORS} from '../../constants/global';
 import {calendarFormattedDate} from '../../utils/dateUtils';
@@ -34,11 +35,9 @@ const styles = StyleSheet.create({
   },
   modalContentWrapper: {
     flex: 1,
-    backgroundColor: COLORS.GRAY,
+    backgroundColor: COLORS.WHITE,
     marginBottom: 100,
     marginTop: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 40,
   },
 });
@@ -132,14 +131,12 @@ const ScheduleScreen = ({navigation, route}) => {
         animationOutTiming={700}
         backdropTransitionInTiming={500}
         backdropTransitionOutTiming={500}
-        swipeDirection={['up']}
-        onSwipeComplete={closeModal}
+        // swipeDirection={['up']}
+        // onSwipeComplete={closeModal}
         onBackdropPress={closeModal}
         style={{margin: 0}}>
         <View style={styles.modalContentWrapper}>
-          <Text style={{color: COLORS.WHITE, textAlign: 'center'}}>
-            {'Create Todo'}
-          </Text>
+          <Todos />
         </View>
       </Modal>
     </SafeAreaView>

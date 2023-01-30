@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {signUp, login, logoutReq} from '../../requests/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {errorHandler} from '../../utils/helpers';
+import {errorHandler, delay} from '../../utils/helpers';
 import {changeIsLoadingStatus} from '../loading/loadingSlice';
 import {
   setLoginError,
@@ -42,16 +42,12 @@ export const loginRequest = createAsyncThunk(
   },
 );
 
-function later(delay, value) {
-  return new Promise(resolve => setTimeout(resolve, delay, value));
-}
-
 export const googleAuth = createAsyncThunk(
   'auth/login',
   async (data, thunkApi) => {
     try {
       await AsyncStorage.setItem('@Token', data.tokens.access.token);
-      await later(5000);
+      await delay(5000);
       return thunkApi.fulfillWithValue(data);
     } catch (err) {
       return thunkApi.rejectWithValue(errorHandler(err));
